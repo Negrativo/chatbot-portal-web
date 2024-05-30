@@ -1,0 +1,24 @@
+/* Dashboard.css */
+.container {
+    margin: 30px;
+}
+
+.container.breadcrumb {
+    margin-bottom: 30px;
+}
+
+@media (max-width: 600px) {
+    .container,
+    .container.breadcrumb {
+        margin: 16px;
+    }
+    .container.breadcrumb {
+        margin-bottom: 16px;
+    }
+}
+
+.loadingContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

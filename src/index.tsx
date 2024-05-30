@@ -3,13 +3,21 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import GlobalSnackbar from './components/globalSnackbar';
+import { NotificationProvider } from './context/NotificationContext';
+import { UserProvider } from './context/UserContext';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <NotificationProvider>
+      <GlobalSnackbar />
+      <UserProvider>
+        <App />
+      </UserProvider>
+    </NotificationProvider>
   </React.StrictMode>
 );
 
