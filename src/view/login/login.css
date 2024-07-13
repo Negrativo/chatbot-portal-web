@@ -1,0 +1,43 @@
+/* Container principal */
+.container {
+    display: flex;
+    height: 100vh;
+  }
+  
+  /* Estilo para o contêiner de login */
+  .login-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 32px;
+    background-color: #fff; /* Fundo branco */
+    border-right: 5px solid #333; /* Borda direita para separar os contêineres */
+    padding: 100px;
+    font-family: 'SFProDisplay-Regular';
+  }
+  
+  /* Estilo para o contêiner de Lottie */
+  .lottie-container { 
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #333; /* Fundo preto */
+    color: #ffffff;
+  }
+  
+  /* Estilos adicionais */
+  .login-container .MuiTypography-h4 {
+    margin-bottom: 16px;
+  }
+  
+  .login-container .MuiTextField-root {
+    margin-bottom: 16px;
+  }
+  
+  .login-container .MuiButton-root {
+    margin-top: 16px;
+  }
+  

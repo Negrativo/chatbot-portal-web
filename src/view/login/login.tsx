@@ -1,70 +1,54 @@
-import React, { useState, useContext } from 'react';
-import { Box, Grid, Paper, styled, TextField, BottomNavigation, BottomNavigationAction} from '@mui/material';
+import React, { useState, useContext, useEffect } from 'react';
+import { TextField, Button, Checkbox, FormControlLabel, Typography, Paper } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
 import { loginWeb } from '../../services/loginService';
 import { useNotification } from '../../context/NotificationContext';
 import { UserContext } from '../../context/UserContext';
+import Lottie from 'react-lottie';
+import animationData from '../../../public/AnimationLogin.json'; // Exemplo de animação Lottie
+import './login.css';
+import axios from 'axios';
 
-const Container = styled('div')(({ theme }) => ({
-  margin: '30px',
-  [theme.breakpoints.down('sm')]: { margin: '16px' },
-  '& .breadcrumb': {
-    marginBottom: '30px',
-    [theme.breakpoints.down('sm')]: { marginBottom: '16px' },
-  },
-}));
-
-type Props = {
-};
-
-const Login: React.FC<Props> = (props) => {
+const Login: React.FC = () => {
   const { triggerNotification } = useNotification();
   const { loginUser } = useContext(UserContext);
 
   const [login, setLogin] = useState('');
   const [senha, setSenha] = useState('');
-
+  const [animationData, setAnimationData] = useState(null);
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem('token');
+  useEffect(() => {
+    axios.get('/AnimationLogin.json').then(response => {
+      setAnimationData(response.data);
+    });
+  }, []);
 
-  //   if (!!token) {
-  //     navigate(`/dashboard`);
-  //   }
-  // }, [navigate]);
-
-  const handleCodigoChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+  const handleCodigoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLogin(event.target.value);
   };
 
-  const handleSenhaChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+  const handleSenhaChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSenha(event.target.value);
   };
 
   async function handleLoginWeb() {
     localStorage.removeItem('token');
     if (validaDados()) {
-        console.log(1);
-        const loginData = await loginWeb(login, senha);
-        console.log(2);
-        if (loginData.token) {
-            if (!!loginData.adminData) {
-              loginUser(loginData.adminData);  // Certifique-se que adminData existe
-            }
-            console.log(3);
-            localStorage.setItem('token', loginData.token);
-            triggerNotification('Logado com sucesso!', 'success');
-            navigate(`/dashboard`);
-        } else {
-            console.log(4);
-            const mensagem = loginData.message || 'Ocorreu um erro inesperado!';
-            triggerNotification(mensagem, 'error');
+      const loginData = await loginWeb(login, senha);
+      if (loginData.token) {
+        if (loginData.adminData) {
+          loginUser(loginData.adminData);  // Certifique-se que adminData existe
         }
+        localStorage.setItem('token', loginData.token);
+        triggerNotification('Logado com sucesso!', 'success');
+        navigate(`/dashboard`);
+      } else {
+        const mensagem = loginData.message || 'Ocorreu um erro inesperado!';
+        triggerNotification(mensagem, 'error');
+      }
     }
-}
-
+  }
 
   function validaDados() {
     if (!login) {
@@ -78,25 +62,40 @@ const Login: React.FC<Props> = (props) => {
     return true;
   }
 
-  return (
-    <Container>
-      <Paper sx={{ width: '100%', mb: 2 }}>
-        <Box sx={{ display: 'grid', gap: '16px', marginBottom: '10px', padding: 2 }}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} md={6}>
-              <TextField label="Código" value={login} onChange={handleCodigoChange} fullWidth />
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <TextField label="Senha" value={senha} onChange={handleSenhaChange} type="password" fullWidth />
-            </Grid>
-          </Grid>
-        </Box>
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: 'xMidYMid slice'
+    }
+  };
 
-        <BottomNavigation showLabels>
-          <BottomNavigationAction label="Entrar" icon={<LoginRoundedIcon />} onClick={handleLoginWeb} />
-        </BottomNavigation>
+  return (
+    <div className="container">
+      <Paper className="login-container">
+        <div>
+        <Typography variant="h4" gutterBottom>
+          Bem-vindo ao nosso CRM.
+        </Typography>
+        <Typography variant="h4" gutterBottom>
+          Entre na sua conta e confira as novidades.
+        </Typography>
+        <Typography variant="subtitle1" gutterBottom>
+          Insira seus dados para prosseguir:
+        </Typography>
+        <TextField label="E-mail" fullWidth margin="normal" />
+        <TextField label="Senha" type="password" fullWidth margin="normal" />
+        <Button variant="outlined" color="primary" fullWidth onClick={handleLoginWeb}>
+          Entrar
+        </Button>
+        </div>
+
       </Paper>
-    </Container>
+      <div className="lottie-container">
+        <Lottie options={defaultOptions} height={400} width={400} />
+      </div>
+    </div>
   );
 };
 
