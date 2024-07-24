@@ -8,7 +8,7 @@ interface loginReturn {
     adminData?: Admin
 }
 
-interface ApiErrorResponse {
+interface ApiMessageResponse {
   message: string;
 }
 
@@ -22,7 +22,7 @@ export const loginWeb = async (login: string, password: string): Promise<loginRe
       return response.data;
   } catch (error) {
       console.error('Error logging in:', error);
-      const axiosError = error as AxiosError<ApiErrorResponse>;
+      const axiosError = error as AxiosError<ApiMessageResponse>;
       if (axiosError.response) {
           const message = axiosError.response.data.message || 'Error logging in with unknown error';
           console.error('Error logging in:', message);
@@ -41,3 +41,56 @@ export const loginWeb = async (login: string, password: string): Promise<loginRe
       }
   }
 };
+
+export const solitcitarTokenSenha = async (email: string): Promise<ApiMessageResponse> => {
+    try {
+        const response = await api.post(`/SolicitarTokenSenha`, { email });
+        console.log(response.data)
+        if (response.data.token) {
+          api.setAuthToken(response.data.token)
+        }
+        return response.data;
+    } catch (error) {
+        console.error('Error send e-mail token in:', error);
+        const axiosError = error as AxiosError<ApiMessageResponse>;
+        if (axiosError.response) {
+            const message = axiosError.response.data.message;
+            console.error('Error send e-mail token in:', message);
+            return {
+                message,
+            };
+        } else {
+            console.error('Error send e-mail token in:', axiosError.message);
+            return {
+                message: axiosError.message,
+    
+            };
+        }
+    }
+  };
+
+export const recuperarSenha = async (token: string, newPassword: string): Promise<ApiMessageResponse> => {
+    try {
+        const response = await api.post(`/recuperarSenha`, { token, newPassword });
+        console.log(response.data)
+        if (response.data.token) {
+          api.setAuthToken(response.data.token)
+        }
+        return response.data;
+    } catch (error) {
+        console.error('Error send e-mail token in:', error);
+        const axiosError = error as AxiosError<ApiMessageResponse>;
+        if (axiosError.response) {
+            const message = axiosError.response.data.message;
+            console.error('Error send e-mail token in:', message);
+            return {
+                message,
+            };
+        } else {
+            console.error('Error send e-mail token in:', axiosError.message);
+            return {
+                message: axiosError.message,
+            };
+        }
+    }
+  };

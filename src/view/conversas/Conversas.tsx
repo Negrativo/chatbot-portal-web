@@ -8,14 +8,14 @@ import { Chat } from "../../interfaces/Conversas";
 import CircularProgress from "@mui/material/CircularProgress";
 import CalendarComponent from "../../components/Calendar/Calendar";
 import { Eventos } from "../../interfaces/Eventos";
-import "./Dashboard.css";
-import BlocoDashboard from "../../components/BlocoDashboard/BlocoDashboard";
+import "./Conversas.css";
 
 type Props = {};
 
-const Dashboard: React.FC<Props> = (props) => {
+const Conversas: React.FC<Props> = (props) => {
 	const { triggerNotification } = useNotification();
 	const { user } = useContext(UserContext);
+	const [chats, setChats] = useState<Chat[]>([]);
 	const [eventos, setEventos] = useState<Eventos>({ eventos: [] });
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -26,6 +26,30 @@ const Dashboard: React.FC<Props> = (props) => {
 	];
 
 	const navigate = useNavigate();
+
+	useEffect(() => {
+		console.log(user);
+		if (!user) {
+			navigate("/login");
+			return;
+		}
+
+		const loadChats = async () => {
+			setIsLoading(true);
+			try {
+				const data = await buscarConversas();
+				console.log(data);
+				setChats(data.chats);
+			} catch (error) {
+				triggerNotification("Erro ao buscar conversas!", "error");
+				console.error("Erro ao buscar conversas:", error);
+			} finally {
+				setIsLoading(false); // Desativa o indicador de loading
+			}
+		};
+
+		loadChats();
+	}, [triggerNotification, user, navigate]);
 
 	useEffect(() => {
 		console.log(user);
@@ -53,25 +77,29 @@ const Dashboard: React.FC<Props> = (props) => {
 
 	return (
 		<div className="container">
-			<div>
-				<div>
-					<Typography className="text-bem-vindo">Olá {user?.name} 👋🏼,</Typography>
-				</div>
+			<Paper sx={{ width: "100%", mb: 2 }}>
 				{isLoading ? (
 					<div className="loadingContainer">
 						<CircularProgress />
-						<Typography>Buscando consultas agendadas.</Typography>
+						<Typography>Buscando conversas</Typography>
 					</div>
-				) : eventos.eventos.length > 0 ? (
-					<div className="linha-bloco">
-						<BlocoDashboard component={CalendarComponent} componentProps={{ eventos: eventos.eventos }} />
-					</div>
+				) : chats.length > 0 ? (
+					<List>
+						{chats.map((chat: Chat) => (
+							<ListItem key={chat.id} button onClick={() => navigate(`/chat/${chat.id}`)}>
+								<ListItemText
+									primary={chat.name}
+									secondary={`Última atualização: ${new Date(chat.updatedAt).toLocaleString()}`}
+								/>
+							</ListItem>
+						))}
+					</List>
 				) : (
-					<Typography>Não foram encontradas agendamentos.</Typography>
+					<Typography>Não foram encontradas conversas recentes.</Typography>
 				)}
-			</div>
+			</Paper>
 		</div>
 	);
 };
 
-export default Dashboard;
+export default Conversas;

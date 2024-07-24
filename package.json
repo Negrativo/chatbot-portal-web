@@ -51,6 +51,7 @@
     ]
   },
   "devDependencies": {
+    "@svgr/webpack": "^8.1.0",
     "@types/react-big-calendar": "^1.8.9",
     "@types/react-lottie": "^1.2.10"
   }

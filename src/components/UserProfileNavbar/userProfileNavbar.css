@@ -1,0 +1,29 @@
+.user-profile {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ccc;
+    font-size: 36px;
+    color: white;
+    margin-right: 10px;
+  }
+  
+  .user-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .user-initial {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: #ccc;
+  }
+  

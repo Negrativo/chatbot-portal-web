@@ -1,11 +1,10 @@
 import React, { useState, useContext, useEffect } from "react";
-import { TextField, Button, Checkbox, FormControlLabel, Typography, Paper } from "@mui/material";
+import { TextField, Button, Typography, Paper } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { loginWeb } from "../../services/loginService";
 import { useNotification } from "../../context/NotificationContext";
 import { UserContext } from "../../context/UserContext";
 import Lottie from "react-lottie";
-import animationData from "../../../public/AnimationLogin.json"; // Exemplo de animação Lottie
 import "./login.css";
 import axios from "axios";
 
@@ -50,6 +49,10 @@ const Login: React.FC = () => {
 		}
 	}
 
+	function handleRecuperarSenhaWeb() {
+		navigate("/recuperarSenha");
+	}
+
 	function validaDados() {
 		if (!login) {
 			triggerNotification("Insira o código de acesso para continuar.", "warning");
@@ -88,6 +91,9 @@ const Login: React.FC = () => {
 					<TextField label="Senha" type="password" onChange={handleSenhaChange} fullWidth margin="normal" />
 					<Button variant="outlined" color="primary" fullWidth onClick={handleLoginWeb}>
 						Entrar
+					</Button>
+					<Button variant="outlined" color="primary" fullWidth onClick={handleRecuperarSenhaWeb}>
+						Recuperar senha
 					</Button>
 				</div>
 			</Paper>
