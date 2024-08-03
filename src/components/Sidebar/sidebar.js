@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import "./sidebar.css";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import UserProfileNavbar from "../UserProfileNavbar/userProfileNavbar";
 import { UserContext } from "../../context/UserContext";
 
@@ -22,48 +22,17 @@ const Sidebar = () => {
 			</div>
 			<nav className="nav-group-itens">
 				<ul className="nav-ul-itens">
-					<li
-						className={`nav-item ${active === "dashboard" ? "active" : ""}`}
-						onClick={() => handleItemClick("dashboard")}
-					>
-						<img src="/icons/dashboard.svg" alt="Dashboard" />
-						<span>Dashboard</span>
-					</li>
-					<li
-						className={`nav-item ${active === "conversas" ? "active" : ""}`}
-						onClick={() => handleItemClick("conversas")}
-					>
-						<img src="/icons/conversas.svg" alt="Conversas" />
-						<span>Conversas</span>
-					</li>
-					<li
-						className={`nav-item ${active === "consultas" ? "active" : ""}`}
-						onClick={() => handleItemClick("consultas")}
-					>
-						<img src="/icons/consulta.svg" alt="Consultas" />
-						<span>Consultas</span>
-					</li>
-					<li
-						className={`nav-item ${active === "renda" ? "active" : ""}`}
-						onClick={() => handleItemClick("renda")}
-					>
-						<img src="/icons/renda.svg" alt="Renda" />
-						<span>Renda</span>
-					</li>
-					<li
-						className={`nav-item ${active === "suporte" ? "active" : ""}`}
-						onClick={() => handleItemClick("suporte")}
-					>
-						<img src="/icons/suporte.svg" alt="Suporte" />
-						<span>Suporte</span>
-					</li>
-					<li
-						className={`nav-item ${active === "ajuda" ? "active" : ""}`}
-						onClick={() => handleItemClick("ajuda")}
-					>
-						<img src="/icons/ajuda.svg" alt="Ajuda" />
-						<span>Ajuda</span>
-					</li>
+					{["dashboard", "conversas", "consultas", "renda", "suporte", "ajuda"].map((item) => (
+						<li
+							key={item}
+							className={`nav-item ${active === item ? "active" : ""}`}
+							onClick={() => handleItemClick(item)}
+						>
+							<img src={`/icons/${item}.svg`} alt={item} />
+							<span>{item.charAt(0).toUpperCase() + item.slice(1)}</span>
+							{active !== item && <img className="seta" src="/icons/seta-sidebar.svg" alt="seta" />}
+						</li>
+					))}
 				</ul>
 			</nav>
 			<div className="group-user-profile">

@@ -1,12 +1,12 @@
 import React, { useState, useContext, useEffect } from "react";
-import { TextField, Button, Typography, Paper } from "@mui/material";
+import { TextField, Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { loginWeb } from "../../services/loginService";
 import { useNotification } from "../../context/NotificationContext";
 import { UserContext } from "../../context/UserContext";
 import Lottie from "react-lottie";
-import "./login.css";
 import axios from "axios";
+import "./login.css";
 
 const Login: React.FC = () => {
 	const { triggerNotification } = useNotification();

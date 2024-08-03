@@ -1,95 +1,101 @@
 .sidebar {
-    width: 250px;
-    background-color: #fff;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  
-  .logo {
-    padding: 20px;
-    text-align: center;
-  }
-  
-  .logo img {
-    width: 100px;
-  }
-  
-  nav ul {
-    list-style: none;
-    padding: 0;
-  }
+  background-color: #fff;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  min-width: 15vw;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
-  .nav-group-itens {
-    height: 100%;
-    display: flex;
-    justify-content: center;
-  }
+.logo {
+  padding: 20px;
+  text-align: center;
+}
 
-  .nav-ul-itens {
-    width: 80%;
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
-  .nav-item {
-    display: flex;
-    align-items: center;
-    padding: 15px 20px;
-    cursor: pointer;
-  }
-  
-  .nav-item img {
-    width: 24px;
-    margin-right: 10px;
-  }
-  
-  .nav-item span {
-    font-size: 16px;
-    color: #333;
-  }
-  
-  .nav-item.active {
-    background-color: #1C5229;
-    width: 100%;
-    border-radius: 8px;
-  }
-  
-  .nav-item.active span {
-    color: white;
-  }
-  
-  .group-user-profile {
-    display: flex;
-    flex-direction: row;
-    margin: 15px;
-  }
+.logo img {
+  width: 100px;
+}
 
-  .user-profile {
-    display: flex;
-    align-items: center;
-    padding: 20px;
-  }
-  
-  .user-profile img {
-    width: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
-  }
-  
-  .user-info {
-    align-items: center;
-    display: flex;
-  }
+nav ul {
+  list-style: none;
+  padding: 0;
+}
 
-  .user-info span {
-    display: block;
-    font-weight: bold;
-    font-size: 16px;
-    color: #888;
-  }
-  
-  
+.nav-group-itens {
+  height: 100%;
+  min-width: 15vw;
+  display: flex;
+  justify-content: center;
+}
+
+.nav-ul-itens {
+  width: 80%;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  cursor: pointer;
+}
+
+.nav-item img {
+  width: 24px;
+  margin-right: 10px;
+}
+
+.nav-item span {
+  font-size: 16px;
+  color: #333;
+}
+
+.nav-item.active {
+  background-color: #1C5229;
+  width: 100%;
+  border-radius: 8px;
+}
+
+.nav-item.active span {
+  color: white;
+}
+
+.nav-item .seta {
+  margin-left: auto;
+  margin-right: 10px;
+  width: 15px;
+  height: 15px;
+}
+
+.group-user-profile {
+  display: flex;
+  flex-direction: row;
+  margin: 15px;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+}
+
+.user-profile img {
+  width: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.user-info {
+  align-items: center;
+  display: flex;
+}
+
+.user-info span {
+  display: block;
+  font-weight: bold;
+  font-size: 16px;
+  color: #888;
+}

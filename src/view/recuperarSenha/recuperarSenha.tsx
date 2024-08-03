@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { TextField, Button, Typography, Paper } from "@mui/material";
+import { TextField, Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { recuperarSenha, solitcitarTokenSenha } from "../../services/loginService";
 import { useNotification } from "../../context/NotificationContext";
 import Lottie from "react-lottie";
-import "./recuperarSenha.css";
 import axios from "axios";
+import "./recuperarSenha.css";
 
 const RecuperarSenha: React.FC = () => {
 	const { triggerNotification } = useNotification();

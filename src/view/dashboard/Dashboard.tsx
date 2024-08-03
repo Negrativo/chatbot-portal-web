@@ -1,15 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Paper, Typography, List, ListItem, ListItemText } from "@mui/material";
+import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useNotification } from "../../context/NotificationContext";
 import { UserContext } from "../../context/UserContext";
-import { buscarConversas, buscarEventos } from "../../services/dashboardService";
-import { Chat } from "../../interfaces/Conversas";
+import { buscarEventos } from "../../services/dashboardService";
 import CircularProgress from "@mui/material/CircularProgress";
 import CalendarComponent from "../../components/Calendar/Calendar";
 import { Eventos } from "../../interfaces/Eventos";
-import "./Dashboard.css";
 import BlocoDashboard from "../../components/BlocoDashboard/BlocoDashboard";
+import "./Dashboard.css";
 
 type Props = {};
 
