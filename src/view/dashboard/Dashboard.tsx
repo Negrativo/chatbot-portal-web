@@ -19,12 +19,6 @@ const Dashboard: React.FC<Props> = (props) => {
 	const [eventos, setEventos] = useState<Eventos>({ eventos: [] });
 	const [isLoading, setIsLoading] = useState(false);
 
-	const markedDates = [
-		{ data: "2024-07-15T00:00:00.000-07:00", nome: "Lucas Souza" },
-		{ data: "2024-07-10T00:00:00.000-07:00", nome: "Vand" },
-		// Adicione mais datas conforme necessário
-	];
-
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -44,7 +38,7 @@ const Dashboard: React.FC<Props> = (props) => {
 				triggerNotification("Erro ao buscar conversas!", "error");
 				console.error("Erro ao buscar conversas:", error);
 			} finally {
-				setIsLoading(false); // Desativa o indicador de loading
+				setIsLoading(false);
 			}
 		};
 
@@ -52,7 +46,7 @@ const Dashboard: React.FC<Props> = (props) => {
 	}, [triggerNotification, user, navigate]);
 
 	return (
-		<div className="container">
+		<div className="container padding-20">
 			<div>
 				<div>
 					<Typography className="text-bem-vindo">Olá {user?.name} 👋🏼,</Typography>

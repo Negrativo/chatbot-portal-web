@@ -1,11 +1,7 @@
-/* Container principal */
-.container {
-    display: flex;
-    height: 100vh;
-  }
+
   
   /* Estilo para o contêiner de login */
-  .login-container {
+  .container-dados-rec {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -16,6 +12,7 @@
     border-right: 5px solid #333; /* Borda direita para separar os contêineres */
     padding: 100px;
     font-family: 'SFProDisplay-Regular';
+    border-radius: 0px 33px 33px 0px;
   }
   
   /* Estilo para o contêiner de Lottie */

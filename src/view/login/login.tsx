@@ -75,8 +75,8 @@ const Login: React.FC = () => {
 	};
 
 	return (
-		<div className="container">
-			<Paper className="login-container">
+		<div className="login-container">
+			<div className="container-dados-login">
 				<div>
 					<Typography variant="h4" gutterBottom>
 						Bem-vindo ao nosso CRM.
@@ -96,7 +96,7 @@ const Login: React.FC = () => {
 						Recuperar senha
 					</Button>
 				</div>
-			</Paper>
+			</div>
 			<div className="lottie-container">
 				<Lottie options={defaultOptions} height={400} width={400} />
 			</div>

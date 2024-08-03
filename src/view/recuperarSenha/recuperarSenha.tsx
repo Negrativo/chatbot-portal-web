@@ -83,8 +83,8 @@ const RecuperarSenha: React.FC = () => {
 	};
 
 	return (
-		<div className="container">
-			<Paper className="login-container">
+		<div className="login-container">
+			<div className="container-dados-rec">
 				<div>
 					{!codigoSolicitado && (
 						<div>
@@ -120,7 +120,7 @@ const RecuperarSenha: React.FC = () => {
 						</div>
 					)}
 				</div>
-			</Paper>
+			</div>
 			<div className="lottie-container">
 				<Lottie options={defaultOptions} height={400} width={400} />
 			</div>
