@@ -12,8 +12,15 @@ import ConversaComponent from "../../components/Conversa/conversa";
 import SearchIcon from "@mui/icons-material/Search";
 import SendIcon from "@mui/icons-material/Send";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
+import conversasMock from "../../mock/conversas.json";
 
 type Props = {};
+
+type Conversation = {
+	id: number;
+	name: string;
+	message: string;
+};
 
 const Conversas: React.FC<Props> = (props) => {
 	const { triggerNotification } = useNotification();
@@ -27,12 +34,7 @@ const Conversas: React.FC<Props> = (props) => {
 
 	const navigate = useNavigate();
 
-	const conversations = [
-		{ id: 1, name: "Felipe Silva", message: "Quero saber o preço final com o desconto por favor." },
-		{ id: 2, name: "Christina Garcia", message: "Ok, valeu" },
-		{ id: 3, name: "Sara Fernandez", message: "Assim funciona pra vocês?" },
-		// Adicione mais conversas conforme necessário
-	];
+	const conversations: Conversation[] = conversasMock.conversation as Conversation[];
 
 	const messages = [
 		{ id: 1, user: "Felipe Silva", time: "15:05", text: "Olá, quero comprar uma de suas cadeiras" },

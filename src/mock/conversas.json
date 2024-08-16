@@ -1,0 +1,7 @@
+{
+  "conversation": [
+    { "id": 1, "name": "Felipe Silva", "message": "Quero saber o preço final com o desconto por favor." },
+    { "id": 2, "name": "Christina Garcia", "message": "Ok, valeu" },
+    { "id": 3, "name": "Sara Fernandez", "message": "Assim funciona pra vocês?" }
+  ]
+}

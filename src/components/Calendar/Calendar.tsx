@@ -4,6 +4,7 @@ import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import Modal from "../Modal/Modal";
 import { Eventos } from "../../interfaces/Eventos";
+import { Typography } from "@mui/material";
 
 const localizer = momentLocalizer(moment);
 
@@ -37,13 +38,16 @@ const CalendarComponent: React.FC<Eventos> = ({ eventos }) => {
 	};
 
 	return (
-		<div>
+		<div style={{ height: "100%" }}>
+			<Typography align="center" style={{ fontWeight: "bold" }} fontSize={24}>
+				Agendamentos
+			</Typography>
 			<Calendar
 				localizer={localizer}
 				events={events}
 				startAccessor="start"
 				endAccessor="end"
-				style={{ height: 500 }}
+				style={{ height: "90%" }}
 				onSelectEvent={handleSelectEvent}
 			/>
 
