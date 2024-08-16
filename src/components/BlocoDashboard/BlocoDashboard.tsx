@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
+import React from "react";
 import "./BlocoDashboard.css";
-import { UserContext } from "../../context/UserContext";
 
 interface WithNavigationDrawerProps {
 	component: React.ComponentType<any>;

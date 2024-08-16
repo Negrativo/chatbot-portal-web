@@ -10,17 +10,7 @@ import {
 	Avatar,
 	Typography,
 } from "@mui/material";
-import {
-	Dashboard,
-	Chat,
-	CalendarToday,
-	AttachMoney,
-	Support,
-	Help,
-	Menu,
-	ExpandLess,
-	ExpandMore,
-} from "@mui/icons-material";
+import { Dashboard, Chat, CalendarToday, Support, Menu, ExpandLess, ExpandMore } from "@mui/icons-material";
 import { styled } from "@mui/system";
 import { UserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";

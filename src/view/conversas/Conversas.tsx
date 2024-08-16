@@ -6,9 +6,9 @@ import { UserContext } from "../../context/UserContext";
 import { buscarConversas, buscarEventos } from "../../services/dashboardService";
 import { Chat } from "../../interfaces/Conversas";
 import CircularProgress from "@mui/material/CircularProgress";
-import CalendarComponent from "../../components/Calendar/Calendar";
 import { Eventos } from "../../interfaces/Eventos";
 import "./Conversas.css";
+import ConversaComponent from "../../components/Conversa/conversa";
 
 type Props = {};
 
@@ -18,14 +18,33 @@ const Conversas: React.FC<Props> = (props) => {
 	const [chats, setChats] = useState<Chat[]>([]);
 	const [eventos, setEventos] = useState<Eventos>({ eventos: [] });
 	const [isLoading, setIsLoading] = useState(false);
-
-	const markedDates = [
-		{ data: "2024-07-15T00:00:00.000-07:00", nome: "Lucas Souza" },
-		{ data: "2024-07-10T00:00:00.000-07:00", nome: "Vand" },
-		// Adicione mais datas conforme necessário
-	];
+	const [selectedChat, setSelectedChat] = useState<number | null>(null);
 
 	const navigate = useNavigate();
+
+	const conversations = [
+		{ id: 1, name: "Felipe Silva", message: "Quero saber o preço final com o desconto por favor." },
+		{ id: 2, name: "Christina Garcia", message: "Ok, valeu" },
+		{ id: 3, name: "Sara Fernandez", message: "Assim funciona pra vocês?" },
+		// Adicione mais conversas conforme necessário
+	];
+
+	const messages = [
+		{ id: 1, user: "Felipe Silva", time: "15:05", text: "Olá, quero comprar uma de suas cadeiras" },
+		{
+			id: 2,
+			user: "Elena Maria",
+			time: "15:05",
+			text: "Certo! Você pode escolher entre três cores: roxo, azul, vermelho.",
+		},
+		{
+			id: 3,
+			user: "Felipe Silva",
+			time: "15:05",
+			text: "Bacana. Há algum desconto? Essa promoção no site se aplica?",
+		},
+		// Adicione mais mensagens conforme necessário
+	];
 
 	useEffect(() => {
 		console.log(user);
@@ -44,7 +63,7 @@ const Conversas: React.FC<Props> = (props) => {
 				triggerNotification("Erro ao buscar conversas!", "error");
 				console.error("Erro ao buscar conversas:", error);
 			} finally {
-				setIsLoading(false); // Desativa o indicador de loading
+				setIsLoading(false);
 			}
 		};
 
@@ -68,12 +87,16 @@ const Conversas: React.FC<Props> = (props) => {
 				triggerNotification("Erro ao buscar conversas!", "error");
 				console.error("Erro ao buscar conversas:", error);
 			} finally {
-				setIsLoading(false); // Desativa o indicador de loading
+				setIsLoading(false);
 			}
 		};
 
 		loadChats();
 	}, [triggerNotification, user, navigate]);
+
+	const handleChatSelect = (chatId: number) => {
+		setSelectedChat(chatId);
+	};
 
 	return (
 		<div className="container">
@@ -84,16 +107,40 @@ const Conversas: React.FC<Props> = (props) => {
 						<Typography>Buscando conversas</Typography>
 					</div>
 				) : chats.length > 0 ? (
-					<List>
-						{chats.map((chat: Chat) => (
-							<ListItem key={chat.id} button onClick={() => navigate(`/chat/${chat.id}`)}>
-								<ListItemText
-									primary={chat.name}
-									secondary={`Última atualização: ${new Date(chat.updatedAt).toLocaleString()}`}
-								/>
-							</ListItem>
-						))}
-					</List>
+					<div className="chat-container">
+						<div className="chat-sidebar">
+							<div className="chat-header">
+								<h3>Central de Atendimento</h3>
+							</div>
+							<div className="chat-list">
+								{conversations.map((conversation) => (
+									<ConversaComponent
+										key={conversation.id}
+										conversation={conversation}
+										onChatSelect={handleChatSelect}
+										selectedChatId={selectedChat}
+									/>
+								))}
+							</div>
+						</div>
+						<div className="chat-content">
+							{selectedChat ? (
+								<div className="messages">
+									{messages.map((message) => (
+										<div key={message.id} className="message">
+											<div className="message-header">
+												<span className="message-user">{message.user}</span>
+												<span className="message-time">{message.time}</span>
+											</div>
+											<div className="message-text">{message.text}</div>
+										</div>
+									))}
+								</div>
+							) : (
+								<div className="no-chat-selected">Selecione uma conversa para ver as mensagens.</div>
+							)}
+						</div>
+					</div>
 				) : (
 					<Typography>Não foram encontradas conversas recentes.</Typography>
 				)}
