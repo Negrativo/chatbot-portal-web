@@ -23,7 +23,7 @@ nav ul {
 
 .nav-group-itens {
   height: 100%;
-  min-width: 15vw;
+  width: 18vw;
   display: flex;
   justify-content: center;
 }

@@ -54,6 +54,13 @@
     flex-direction: column;
 }
 
+.chat-block {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 .messages {
     display: flex;
     flex-direction: column;
@@ -92,3 +99,53 @@
     text-align: center;
     margin-top: 50%;
 }
+
+.search-div {
+    padding: 5px;
+}
+
+.search-bar {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #f0f0f0; /* cor de fundo similar à imagem */
+    color: #333;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .search-bar::placeholder {
+    color: #aaa; /* cor do texto do placeholder */
+  }
+  
+  .search-bar:focus {
+    outline: none;
+    border-color: #bbb; /* cor da borda ao focar */
+  }
+
+  .message-input-container {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .message-input {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .message-input .MuiOutlinedInput-root {
+    padding: 10px;
+    font-size: 14px;
+  }
+  
+  .message-input .MuiInputAdornment-root {
+    color: #aaa;
+  }
+  
+  .message-input .MuiIconButton-root {
+    padding: 5px;
+  }

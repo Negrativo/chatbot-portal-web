@@ -30,9 +30,9 @@ interface WithNavigationDrawerProps {
 
 const WithNavigationDrawer: React.FC<WithNavigationDrawerProps> = ({ component: Component }) => {
 	return (
-		<div style={{ display: "flex", flexDirection: "row" }}>
+		<div className="side-bar-conteiner">
 			<Sidebar />
-			<div style={{ width: "100%" }}>
+			<div className="navigation-page">
 				{" "}
 				{/* Ajuste o marginLeft conforme a largura do drawer */}
 				<Component />

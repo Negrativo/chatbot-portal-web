@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Paper, Typography, List, ListItem, ListItemText } from "@mui/material";
+import { Paper, Typography, TextField, InputAdornment, IconButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useNotification } from "../../context/NotificationContext";
 import { UserContext } from "../../context/UserContext";
@@ -9,6 +9,9 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { Eventos } from "../../interfaces/Eventos";
 import "./Conversas.css";
 import ConversaComponent from "../../components/Conversa/conversa";
+import SearchIcon from "@mui/icons-material/Search";
+import SendIcon from "@mui/icons-material/Send";
+import AttachFileIcon from "@mui/icons-material/AttachFile";
 
 type Props = {};
 
@@ -19,6 +22,8 @@ const Conversas: React.FC<Props> = (props) => {
 	const [eventos, setEventos] = useState<Eventos>({ eventos: [] });
 	const [isLoading, setIsLoading] = useState(false);
 	const [selectedChat, setSelectedChat] = useState<number | null>(null);
+	const [searchTerm, setSearchTerm] = useState<string>("");
+	const [newMessage, setNewMessage] = useState("");
 
 	const navigate = useNavigate();
 
@@ -98,6 +103,18 @@ const Conversas: React.FC<Props> = (props) => {
 		setSelectedChat(chatId);
 	};
 
+	const filteredConversations = conversations.filter((conversation) =>
+		conversation.name.toLowerCase().includes(searchTerm.toLowerCase())
+	);
+
+	const handleSendMessage = () => {
+		if (newMessage.trim()) {
+			// Aqui você pode adicionar a lógica para enviar a mensagem
+			console.log("Mensagem enviada:", newMessage);
+			setNewMessage(""); // Limpa o campo após enviar
+		}
+	};
+
 	return (
 		<div className="container">
 			<Paper sx={{ width: "100%", mb: 2 }}>
@@ -106,14 +123,32 @@ const Conversas: React.FC<Props> = (props) => {
 						<CircularProgress />
 						<Typography>Buscando conversas</Typography>
 					</div>
-				) : chats.length > 0 ? (
+				) : // ) : chats.length > 0 ? (
+				conversations.length > 0 ? (
 					<div className="chat-container">
 						<div className="chat-sidebar">
 							<div className="chat-header">
 								<h3>Central de Atendimento</h3>
 							</div>
+							<div className="search-div">
+								<TextField
+									placeholder="Buscar"
+									value={searchTerm}
+									onChange={(e) => setSearchTerm(e.target.value)}
+									variant="outlined"
+									fullWidth
+									InputProps={{
+										startAdornment: (
+											<InputAdornment position="start">
+												<SearchIcon />
+											</InputAdornment>
+										),
+									}}
+									className="search-bar"
+								/>
+							</div>
 							<div className="chat-list">
-								{conversations.map((conversation) => (
+								{filteredConversations.map((conversation) => (
 									<ConversaComponent
 										key={conversation.id}
 										conversation={conversation}
@@ -125,16 +160,47 @@ const Conversas: React.FC<Props> = (props) => {
 						</div>
 						<div className="chat-content">
 							{selectedChat ? (
-								<div className="messages">
-									{messages.map((message) => (
-										<div key={message.id} className="message">
-											<div className="message-header">
-												<span className="message-user">{message.user}</span>
-												<span className="message-time">{message.time}</span>
+								<div className="chat-block">
+									<div className="messages">
+										{messages.map((message) => (
+											<div key={message.id} className="message">
+												<div className="message-header">
+													<span className="message-user">{message.user}</span>
+													<span className="message-time">{message.time}</span>
+												</div>
+												<div className="message-text">{message.text}</div>
 											</div>
-											<div className="message-text">{message.text}</div>
-										</div>
-									))}
+										))}
+									</div>
+									<div className="message-input-container">
+										<TextField
+											placeholder="Digite sua mensagem..."
+											variant="outlined"
+											fullWidth
+											onKeyPress={(e) => {
+												if (e.key === "Enter") {
+													handleSendMessage();
+												}
+											}}
+											InputProps={{
+												startAdornment: (
+													<InputAdornment position="start">
+														<IconButton>
+															<AttachFileIcon />
+														</IconButton>
+													</InputAdornment>
+												),
+												endAdornment: (
+													<InputAdornment position="end">
+														<IconButton>
+															<SendIcon />
+														</IconButton>
+													</InputAdornment>
+												),
+											}}
+											className="message-input"
+										/>
+									</div>
 								</div>
 							) : (
 								<div className="no-chat-selected">Selecione uma conversa para ver as mensagens.</div>

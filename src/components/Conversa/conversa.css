@@ -39,11 +39,10 @@
 }
 
 .chat-item-message {
-    color: #666;
     margin-top: 5px;
     font-size: 14px;
 }
 
-.chat-item.active .chat-item-name, .chat-item-message {
+.chat-item.active .chat-item-name {
     color: white; /* Cor do texto branco quando selecionado */
 }
