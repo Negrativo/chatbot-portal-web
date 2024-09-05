@@ -39,8 +39,9 @@ nav ul {
 .nav-item {
   display: flex;
   align-items: center;
-  padding: 15px 20px;
+  padding: 15px 10px;
   cursor: pointer;
+  width: 100%;
 }
 
 .nav-item img {

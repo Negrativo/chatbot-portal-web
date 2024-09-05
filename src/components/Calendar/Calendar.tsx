@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Calendar, momentLocalizer, Event } from "react-big-calendar";
 import moment from "moment";
+import "moment/locale/pt-br";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import Modal from "../Modal/Modal";
 import { Eventos } from "../../interfaces/Eventos";
@@ -19,6 +20,23 @@ const CalendarComponent: React.FC<Eventos> = ({ eventos }) => {
 	const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(null);
 
 	console.log(eventos);
+	moment.locale("pt-br");
+
+	const messages = {
+		allDay: "Dia inteiro",
+		previous: "<",
+		next: ">",
+		today: "Hoje",
+		month: "Mês",
+		week: "Semana",
+		day: "Dia",
+		agenda: "Agenda",
+		date: "Data",
+		time: "Hora",
+		event: "Evento",
+		noEventsInRange: "Nenhum evento neste intervalo.",
+		showMore: (total: any) => `+ Ver mais (${total})`,
+	};
 
 	useEffect(() => {
 		const parsedEvents = eventos.map((evento) => ({
@@ -49,6 +67,7 @@ const CalendarComponent: React.FC<Eventos> = ({ eventos }) => {
 				endAccessor="end"
 				style={{ height: "90%" }}
 				onSelectEvent={handleSelectEvent}
+				messages={messages}
 			/>
 
 			<Modal show={!!selectedEvent} onClose={closeModal}>

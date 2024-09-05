@@ -8,7 +8,7 @@ interface conversasReturn {
 
 export const buscarConversas = async (): Promise<conversasReturn> => {
   try {
-      const response = await api.get(`/chat/buscarConversas`);
+      const response = await api.get(`/conversa/buscar`);
       console.log(response.data)
       return response.data;
   } catch (error) {
