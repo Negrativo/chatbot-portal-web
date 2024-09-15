@@ -1,9 +1,9 @@
 import api from "./api";
-import { Chat } from "../interfaces/Conversas";
+import { Conversations } from "../interfaces/Conversas";
 import {Agendamentos} from '../interfaces/Agendamento';
 
 interface conversasReturn {
-    chats: Chat[]
+    conversations: Conversations[]
 }
 
 export const buscarConversas = async (): Promise<conversasReturn> => {
@@ -13,7 +13,7 @@ export const buscarConversas = async (): Promise<conversasReturn> => {
       return response.data;
   } catch (error) {
     console.error('Error logging in:', error);
-    return {chats: []};
+    return {conversations: []};
   }
 };
 

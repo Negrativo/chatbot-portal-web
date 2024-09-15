@@ -3,14 +3,21 @@ import "./conversa.css";
 
 interface Conversation {
 	conversation: Conversa;
-	onChatSelect: (chatId: number) => void;
-	selectedChatId: number | null;
+	onChatSelect: (chatId: string) => void;
+	selectedChatId: string | null;
 }
 
 interface Conversa {
-	id: number;
-	name: string;
-	message: string;
+	sender_id: string;
+	conversation_data: {
+		messages: {
+			type_name: string;
+			text: string;
+			timestamp: number;
+		}[];
+	};
+	createdAt: string;
+	updatedAt: string;
 }
 
 const ConversaComponent: React.FC<Conversation> = ({ conversation, onChatSelect, selectedChatId }) => {
@@ -19,19 +26,21 @@ const ConversaComponent: React.FC<Conversation> = ({ conversation, onChatSelect,
 	};
 
 	const handleChatClick = () => {
-		onChatSelect(conversation.id);
+		onChatSelect(conversation.sender_id);
 	};
+
+	const ultimaMensagem = conversation.conversation_data.messages.length - 1;
 
 	return (
 		<div
-			key={conversation.id}
-			className={`chat-item ${selectedChatId === conversation.id ? "active" : ""}`}
+			key={conversation.sender_id}
+			className={`chat-item ${selectedChatId === conversation.sender_id ? "active" : ""}`}
 			onClick={handleChatClick}
 		>
-			<div className="chat-user-icon">{getInitial(conversation.name)}</div>
+			<div className="chat-user-icon">{getInitial(conversation.sender_id)}</div>
 			<div className="chat-item-texts">
-				<div className="chat-item-name">{conversation.name}</div>
-				<div className="chat-item-message">{conversation.message}</div>
+				<div className="chat-item-name">{conversation.sender_id}</div>
+				<div className="chat-item-message">{conversation.conversation_data.messages[ultimaMensagem].text}</div>
 			</div>
 		</div>
 	);

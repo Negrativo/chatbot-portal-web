@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useNotification } from "../../context/NotificationContext";
 import { UserContext } from "../../context/UserContext";
 import { buscarConversas, buscarAgendamentos } from "../../services/dashboardService";
-import { Chat } from "../../interfaces/Conversas";
+import { Conversations } from "../../interfaces/Conversas";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Agendamentos } from "../../interfaces/Agendamento";
 import "./Conversas.css";
@@ -22,36 +22,30 @@ type Conversation = {
 	message: string;
 };
 
-const Conversas: React.FC<Props> = (props) => {
-	const { triggerNotification } = useNotification();
-	const { user } = useContext(UserContext);
-	const [chats, setChats] = useState<Chat[]>([]);
-	const [agendamentos, setAgendamentos] = useState<Agendamentos>({ agendamentos: [] });
-	const [isLoading, setIsLoading] = useState(false);
-	const [selectedChat, setSelectedChat] = useState<number | null>(null);
-	const [searchTerm, setSearchTerm] = useState<string>("");
-	const [newMessage, setNewMessage] = useState("");
+type ConversationData = {
+	sender_id: string;
+	conversation_data: {
+		messages: {
+			type_name: string;
+			text: string;
+			timestamp: number;
+		}[];
+	};
+	createdAt: string;
+	updatedAt: string;
+};
 
+const Conversas: React.FC<Props> = (props) => {
 	const navigate = useNavigate();
 
-	const conversations: Conversation[] = conversasMock.conversation as Conversation[];
-
-	const messages = [
-		{ id: 1, user: "Felipe Silva", time: "15:05", text: "Olá, quero comprar uma de suas cadeiras" },
-		{
-			id: 2,
-			user: "Elena Maria",
-			time: "15:05",
-			text: "Certo! Você pode escolher entre três cores: roxo, azul, vermelho.",
-		},
-		{
-			id: 3,
-			user: "Felipe Silva",
-			time: "15:05",
-			text: "Bacana. Há algum desconto? Essa promoção no site se aplica?",
-		},
-		// Adicione mais mensagens conforme necessário
-	];
+	const { triggerNotification } = useNotification();
+	const { user } = useContext(UserContext);
+	const [chats, setChats] = useState<Conversations[]>([]);
+	const [isLoading, setIsLoading] = useState(false);
+	const [selectedChat, setSelectedChat] = useState<string | null>(null);
+	const [searchTerm, setSearchTerm] = useState<string>("");
+	const [newMessage, setNewMessage] = useState("");
+	const [conversations, setConversations] = useState<ConversationData[]>([]);
 
 	useEffect(() => {
 		console.log(user);
@@ -65,7 +59,11 @@ const Conversas: React.FC<Props> = (props) => {
 			try {
 				const data = await buscarConversas();
 				console.log(data);
-				setChats(data.chats);
+				if (data && data.conversations) {
+					setConversations(data.conversations);
+				} else {
+					setConversations([]); // Garante que seja um array
+				}
 			} catch (error) {
 				triggerNotification("Erro ao buscar conversas!", "error");
 				console.error("Erro ao buscar conversas:", error);
@@ -77,36 +75,12 @@ const Conversas: React.FC<Props> = (props) => {
 		loadChats();
 	}, [triggerNotification, user, navigate]);
 
-	useEffect(() => {
-		console.log(user);
-		if (!user) {
-			navigate("/login");
-			return;
-		}
-
-		const loadChats = async () => {
-			setIsLoading(true);
-			try {
-				const data = await buscarAgendamentos();
-				console.log(data);
-				setAgendamentos(data);
-			} catch (error) {
-				triggerNotification("Erro ao buscar conversas!", "error");
-				console.error("Erro ao buscar conversas:", error);
-			} finally {
-				setIsLoading(false);
-			}
-		};
-
-		loadChats();
-	}, [triggerNotification, user, navigate]);
-
-	const handleChatSelect = (chatId: number) => {
+	const handleChatSelect = (chatId: string) => {
 		setSelectedChat(chatId);
 	};
 
 	const filteredConversations = conversations.filter((conversation) =>
-		conversation.name.toLowerCase().includes(searchTerm.toLowerCase())
+		conversation.sender_id.toLowerCase().includes(searchTerm.toLowerCase())
 	);
 
 	const handleSendMessage = () => {
@@ -116,6 +90,8 @@ const Conversas: React.FC<Props> = (props) => {
 			setNewMessage(""); // Limpa o campo após enviar
 		}
 	};
+
+	const selectedConversation = conversations.find((conversation) => conversation.sender_id === selectedChat);
 
 	return (
 		<div className="container">
@@ -152,7 +128,7 @@ const Conversas: React.FC<Props> = (props) => {
 							<div className="chat-list">
 								{filteredConversations.map((conversation) => (
 									<ConversaComponent
-										key={conversation.id}
+										key={conversation.sender_id}
 										conversation={conversation}
 										onChatSelect={handleChatSelect}
 										selectedChatId={selectedChat}
@@ -161,14 +137,21 @@ const Conversas: React.FC<Props> = (props) => {
 							</div>
 						</div>
 						<div className="chat-content">
-							{selectedChat ? (
+							{selectedChat && selectedConversation ? (
 								<div className="chat-block">
 									<div className="messages">
-										{messages.map((message) => (
-											<div key={message.id} className="message">
+										{selectedConversation.conversation_data.messages.map((message, index) => (
+											<div
+												key={index}
+												className={`message ${message.type_name === "user" ? "user" : "bot"}`}
+											>
 												<div className="message-header">
-													<span className="message-user">{message.user}</span>
-													<span className="message-time">{message.time}</span>
+													<span className="message-user">
+														{message.type_name === "user" ? "Usuário" : "Bot"}
+													</span>
+													<span className="message-time">
+														{new Date(message.timestamp * 1000).toLocaleTimeString()}
+													</span>
 												</div>
 												<div className="message-text">{message.text}</div>
 											</div>

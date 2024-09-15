@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Navigate, Routes, Route } from "react-router-d
 import NotFoundScreen from "./view/notFound/notFoundScreen";
 import Login from "./view/login/login";
 import Dashboard from "./view/dashboard/Dashboard";
-import ChatDetails from "./view/chatDetail/chatDetail";
 import RecuperarSenha from "./view/recuperarSenha/recuperarSenha";
 import Sidebar from "./components/Sidebar/sidebar";
 import Conversas from "./view/conversas/Conversas";
@@ -17,7 +16,6 @@ function App() {
 				<Route path="/login" element={<Login />} />
 				<Route path="/recuperarSenha" element={<RecuperarSenha />} />
 				<Route path="/dashboard" element={<WithNavigationDrawer component={Dashboard} />} />
-				<Route path="/chat/:chatId" element={<WithNavigationDrawer component={ChatDetails} />} />
 				<Route path="/conversas" element={<WithNavigationDrawer component={Conversas} />} />
 				<Route path="/consultas" element={<WithNavigationDrawer component={Consultas} />} />
 				<Route path="*" element={<NotFoundScreen />} />

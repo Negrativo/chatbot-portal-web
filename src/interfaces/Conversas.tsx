@@ -1,9 +1,12 @@
-export interface Chat {
-	id: string;
-	name: string;
-	adminId: string;
-	sessionId: string;
-	timestamp: string;
+export interface Conversations {
+	sender_id: string;
+	conversation_data: {
+		messages: {
+			type_name: string;
+			text: string;
+			timestamp: number;
+		}[];
+	};
 	createdAt: string;
 	updatedAt: string;
 }

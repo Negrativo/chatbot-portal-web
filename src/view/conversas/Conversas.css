@@ -62,38 +62,6 @@
     justify-content: space-between;
 }
 
-.messages {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.message {
-    background-color: #fff;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-}
-
-.message-header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 5px;
-}
-
-.message-user {
-    font-weight: bold;
-}
-
-.message-time {
-    font-size: 12px;
-    color: #999;
-}
-
-.message-text {
-    font-size: 14px;
-}
-
 .no-chat-selected {
     font-size: 16px;
     color: #666;
@@ -149,4 +117,76 @@
   
   .message-input .MuiIconButton-root {
     padding: 5px;
+  }
+
+  .messages {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    overflow-y: auto;
+    border-radius: 10px;
+  }
+  
+  /* Estilo para cada mensagem individual */
+  .message {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    max-width: 70%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Mensagens do usuário (enviadas) */
+  .message.user {
+    align-self: flex-end;
+    background-color: #007bff;
+    color: white;
+    text-align: left;
+  }
+  
+  /* Mensagens do bot (recebidas) */
+  .message.bot {
+    align-self: flex-start;
+    background-color: #e1e1e1;
+    color: black;
+    text-align: left;
+  }
+  
+  /* Estilo para o cabeçalho de cada mensagem (nome e hora) */
+  .message-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    margin-bottom: 5px;
+    color: rgba(0, 0, 0, 0.6);
+  }
+  
+  /* Estilo do texto da mensagem */
+  .message-text {
+    font-size: 1rem;
+    word-wrap: break-word;
+  }
+  
+  /* Estilo da barra de rolagem */
+  .messages::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .messages::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+  }
+  
+  .messages::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+  }
+  
+  /* Estilo adicional para quando não há uma conversa selecionada */
+  .no-chat-selected {
+    text-align: center;
+    padding: 20px;
+    font-size: 1.2rem;
+    color: rgba(0, 0, 0, 0.6);
   }
