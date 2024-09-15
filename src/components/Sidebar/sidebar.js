@@ -25,7 +25,7 @@ const Sidebar = () => {
 					{["dashboard", "conversas", "consultas", "renda", "suporte", "ajuda"].map((item) => (
 						<li
 							key={item}
-							className={`nav-item ${active === item ? "active" : ""}`}
+							className={`nav-item ${active === item ? "active cor-primaria" : ""}`}
 							onClick={() => handleItemClick(item)}
 						>
 							<img src={`/icons/${item}.svg`} alt={item} />

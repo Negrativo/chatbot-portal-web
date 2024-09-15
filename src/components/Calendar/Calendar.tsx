@@ -4,7 +4,7 @@ import moment from "moment";
 import "moment/locale/pt-br";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import Modal from "../Modal/Modal";
-import { Eventos } from "../../interfaces/Eventos";
+import { Agendamentos } from "../../interfaces/Agendamento";
 import { Typography } from "@mui/material";
 
 const localizer = momentLocalizer(moment);
@@ -15,11 +15,11 @@ interface CalendarEvent extends Event {
 	end: Date;
 }
 
-const CalendarComponent: React.FC<Eventos> = ({ eventos }) => {
+const CalendarComponent: React.FC<Agendamentos> = ({ agendamentos }) => {
 	const [events, setEvents] = useState<CalendarEvent[]>([]);
 	const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(null);
 
-	console.log(eventos);
+	console.log(agendamentos);
 	moment.locale("pt-br");
 
 	const messages = {
@@ -39,13 +39,13 @@ const CalendarComponent: React.FC<Eventos> = ({ eventos }) => {
 	};
 
 	useEffect(() => {
-		const parsedEvents = eventos.map((evento) => ({
+		const parsedEvents = agendamentos.map((evento) => ({
 			start: new Date(evento.dataInicial),
 			end: new Date(evento.dataFinal),
 			title: evento.nomeUser,
 		}));
 		setEvents(parsedEvents);
-	}, [eventos]);
+	}, [agendamentos]);
 
 	const handleSelectEvent = (event: CalendarEvent) => {
 		setSelectedEvent(event);

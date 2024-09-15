@@ -3,10 +3,10 @@ import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useNotification } from "../../context/NotificationContext";
 import { UserContext } from "../../context/UserContext";
-import { buscarEventos } from "../../services/dashboardService";
+import { buscarAgendamentos } from "../../services/dashboardService";
 import CircularProgress from "@mui/material/CircularProgress";
 import CalendarComponent from "../../components/Calendar/Calendar";
-import { Eventos } from "../../interfaces/Eventos";
+import { Agendamentos } from "../../interfaces/Agendamento";
 import BlocoDashboard from "../../components/BlocoDashboard/BlocoDashboard";
 import "./Dashboard.css";
 import ConversasComponent from "../../components/ConversasDash/ConversasDash";
@@ -34,7 +34,7 @@ const mockData = [
 const Dashboard: React.FC<Props> = (props) => {
 	const { triggerNotification } = useNotification();
 	const { user } = useContext(UserContext);
-	const [eventos, setEventos] = useState<Eventos>({ eventos: [] });
+	const [agendamentos, setAgendamentos] = useState<Agendamentos>({ agendamentos: [] });
 	const [isLoading, setIsLoading] = useState(false);
 
 	const conversations: Conversation[] = conversasMock.conversation as Conversation[];
@@ -51,9 +51,9 @@ const Dashboard: React.FC<Props> = (props) => {
 		const loadChats = async () => {
 			setIsLoading(true);
 			try {
-				const data = await buscarEventos();
+				const data = await buscarAgendamentos();
 				console.log(data);
-				setEventos(data);
+				setAgendamentos(data);
 			} catch (error) {
 				triggerNotification("Erro ao buscar conversas!", "error");
 				console.error("Erro ao buscar conversas:", error);
@@ -74,7 +74,10 @@ const Dashboard: React.FC<Props> = (props) => {
 					<Typography className="text-bem-vindo">Olá {user?.name} 👋🏼,</Typography>
 				</div>
 				<div className="linha-bloco">
-					<BlocoDashboard component={CalendarComponent} componentProps={{ eventos: eventos.eventos }} />
+					<BlocoDashboard
+						component={CalendarComponent}
+						componentProps={{ agendamentos: agendamentos.agendamentos }}
+					/>
 					<BlocoDashboard
 						component={ConversasComponent}
 						componentProps={{ conversations: conversations, onChatSelect: irParaConversaSelecionada }}

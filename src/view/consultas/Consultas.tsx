@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useNotification } from "../../context/NotificationContext";
 import { UserContext } from "../../context/UserContext";
 import "./Consultas.css";
-import { Eventos } from "../../interfaces/Eventos";
-import { buscarEventos } from "../../services/dashboardService";
+import { Agendamentos } from "../../interfaces/Agendamento";
+import { buscarAgendamentos } from "../../services/dashboardService";
 import { Calendar, momentLocalizer, Event } from "react-big-calendar";
 import moment from "moment";
 import "moment/locale/pt-br";
@@ -19,7 +19,7 @@ const localizer = momentLocalizer(moment);
 const Consultas: React.FC<Props> = (props) => {
 	const { triggerNotification } = useNotification();
 	const { user } = useContext(UserContext);
-	const [eventos, setEventos] = useState<Eventos>({ eventos: [] });
+	const [agendamentos, setAgendamentos] = useState<Agendamentos>({ agendamentos: [] });
 	const [events, setEvents] = useState<CalendarEvent[]>([]);
 	const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(null);
 
@@ -52,9 +52,9 @@ const Consultas: React.FC<Props> = (props) => {
 
 		const loadChats = async () => {
 			try {
-				const data = await buscarEventos();
+				const data = await buscarAgendamentos();
 				console.log(data);
-				setEventos(data);
+				setAgendamentos(data);
 			} catch (error) {
 				triggerNotification("Erro ao buscar conversas!", "error");
 				console.error("Erro ao buscar conversas:", error);
@@ -64,16 +64,16 @@ const Consultas: React.FC<Props> = (props) => {
 		loadChats();
 	}, [triggerNotification, user, navigate]);
 
-	console.log(eventos);
+	console.log(agendamentos);
 
 	useEffect(() => {
-		const parsedEvents = eventos.eventos.map((evento) => ({
+		const parsedEvents = agendamentos.agendamentos.map((evento) => ({
 			start: new Date(evento.dataInicial),
 			end: new Date(evento.dataFinal),
 			title: evento.nomeUser,
 		}));
 		setEvents(parsedEvents);
-	}, [eventos]);
+	}, [agendamentos]);
 
 	const handleSelectEvent = (event: CalendarEvent) => {
 		setSelectedEvent(event);
@@ -93,6 +93,12 @@ const Consultas: React.FC<Props> = (props) => {
 					style={{ height: "90%" }}
 					onSelectEvent={handleSelectEvent}
 					messages={messages}
+					eventPropGetter={(event) => ({
+						style: {
+							backgroundColor: "#1C5229",
+							color: "white",
+						},
+					})}
 				/>
 			</div>
 			<div className="consulta-container">

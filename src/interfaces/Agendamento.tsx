@@ -1,8 +1,8 @@
-export interface Eventos {
-	eventos: Evento[];
+export interface Agendamentos {
+	agendamentos: Agendamento[];
 }
 
-export interface Evento {
+export interface Agendamento {
 	id: string;
 	cpfUser: string;
 	nomeUser: string;

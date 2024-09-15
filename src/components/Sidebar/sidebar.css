@@ -55,7 +55,6 @@ nav ul {
 }
 
 .nav-item.active {
-  background-color: #1C5229;
   width: 100%;
   border-radius: 8px;
 }

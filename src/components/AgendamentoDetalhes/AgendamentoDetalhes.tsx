@@ -12,14 +12,14 @@ const AgendamentoDetalhes: React.FC<AgendamentoDetalhesProps> = ({ selectedEvent
 		<div className={`agendamento-container ${selectedEvent ? "show" : ""}`}>
 			{selectedEvent && (
 				<>
-					<div className="header">
+					<div className="header cor-primaria">
 						<h2>Detalhes do Agendamento</h2>
 					</div>
 					<div className="content">
 						<p>Paciente: {selectedEvent.title}</p>
 						<p>
-							Consulta agendada entre {moment(selectedEvent.start).format("LL")} e{" "}
-							{moment(selectedEvent.end).format("LL")}
+							Consulta agendada {moment(selectedEvent.start).format("LLLL")} -{" "}
+							{moment(selectedEvent.end).format("LT")}
 						</p>
 						{/* Adicione mais detalhes conforme necessário */}
 					</div>

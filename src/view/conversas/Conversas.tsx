@@ -3,10 +3,10 @@ import { Paper, Typography, TextField, InputAdornment, IconButton } from "@mui/m
 import { useNavigate } from "react-router-dom";
 import { useNotification } from "../../context/NotificationContext";
 import { UserContext } from "../../context/UserContext";
-import { buscarConversas, buscarEventos } from "../../services/dashboardService";
+import { buscarConversas, buscarAgendamentos } from "../../services/dashboardService";
 import { Chat } from "../../interfaces/Conversas";
 import CircularProgress from "@mui/material/CircularProgress";
-import { Eventos } from "../../interfaces/Eventos";
+import { Agendamentos } from "../../interfaces/Agendamento";
 import "./Conversas.css";
 import ConversaComponent from "../../components/Conversa/conversa";
 import SearchIcon from "@mui/icons-material/Search";
@@ -26,7 +26,7 @@ const Conversas: React.FC<Props> = (props) => {
 	const { triggerNotification } = useNotification();
 	const { user } = useContext(UserContext);
 	const [chats, setChats] = useState<Chat[]>([]);
-	const [eventos, setEventos] = useState<Eventos>({ eventos: [] });
+	const [agendamentos, setAgendamentos] = useState<Agendamentos>({ agendamentos: [] });
 	const [isLoading, setIsLoading] = useState(false);
 	const [selectedChat, setSelectedChat] = useState<number | null>(null);
 	const [searchTerm, setSearchTerm] = useState<string>("");
@@ -87,9 +87,9 @@ const Conversas: React.FC<Props> = (props) => {
 		const loadChats = async () => {
 			setIsLoading(true);
 			try {
-				const data = await buscarEventos();
+				const data = await buscarAgendamentos();
 				console.log(data);
-				setEventos(data);
+				setAgendamentos(data);
 			} catch (error) {
 				triggerNotification("Erro ao buscar conversas!", "error");
 				console.error("Erro ao buscar conversas:", error);
