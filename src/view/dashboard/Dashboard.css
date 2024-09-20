@@ -18,8 +18,13 @@
     align-items: center;
 }
 
+.div-bem-vindo {
+    margin-bottom: 10px;
+}
+
 .text-bem-vindo {
-    font-size: 24px;
+    font-size: 22px !important;
+    font-weight: bold !important;
 }
 
 .linha-bloco {

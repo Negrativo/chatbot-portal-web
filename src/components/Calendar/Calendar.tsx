@@ -15,9 +15,10 @@ interface CalendarEvent extends Event {
 	end: Date;
 }
 
-const CalendarComponent: React.FC<Agendamentos> = ({ agendamentos }) => {
+const CalendarDashComponent: React.FC<Agendamentos> = ({ agendamentos }) => {
 	const [events, setEvents] = useState<CalendarEvent[]>([]);
 	const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(null);
+	const [dataAtual, setDataAtual] = useState<Date>(new Date());
 
 	console.log(agendamentos);
 	moment.locale("pt-br");
@@ -55,8 +56,25 @@ const CalendarComponent: React.FC<Agendamentos> = ({ agendamentos }) => {
 		setSelectedEvent(null);
 	};
 
+	useEffect(() => {
+		const parsedEvents = agendamentos.map((evento) => ({
+			start: new Date(evento.dataInicial),
+			end: new Date(evento.dataFinal),
+			title: evento.nomeUser,
+		}));
+
+		setEvents(parsedEvents);
+
+		// Define a data padrão como a data do primeiro evento ou o dia atual
+		if (parsedEvents.length > 0) {
+			setDataAtual(new Date(parsedEvents[0].start));
+		} else {
+			setDataAtual(new Date()); // Se não houver eventos, usa a data atual
+		}
+	}, [agendamentos]);
+
 	return (
-		<div style={{ height: "100%" }}>
+		<div style={{ height: "100%", width: "100%" }}>
 			<Typography align="center" style={{ fontWeight: "bold" }} fontSize={24}>
 				Agendamentos
 			</Typography>
@@ -68,6 +86,9 @@ const CalendarComponent: React.FC<Agendamentos> = ({ agendamentos }) => {
 				style={{ height: "90%" }}
 				onSelectEvent={handleSelectEvent}
 				messages={messages}
+				defaultDate={dataAtual}
+				defaultView="day"
+				scrollToTime={new Date()}
 			/>
 
 			<Modal show={!!selectedEvent} onClose={closeModal}>
@@ -87,4 +108,4 @@ const CalendarComponent: React.FC<Agendamentos> = ({ agendamentos }) => {
 	);
 };
 
-export default CalendarComponent;
+export default CalendarDashComponent;

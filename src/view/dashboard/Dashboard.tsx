@@ -5,7 +5,7 @@ import { useNotification } from "../../context/NotificationContext";
 import { UserContext } from "../../context/UserContext";
 import { buscarAgendamentos } from "../../services/dashboardService";
 import CircularProgress from "@mui/material/CircularProgress";
-import CalendarComponent from "../../components/Calendar/Calendar";
+import CalendarDashComponent from "../../components/Calendar/Calendar";
 import { Agendamentos } from "../../interfaces/Agendamento";
 import BlocoDashboard from "../../components/BlocoDashboard/BlocoDashboard";
 import "./Dashboard.css";
@@ -70,21 +70,21 @@ const Dashboard: React.FC<Props> = (props) => {
 	return (
 		<div className="container padding-20">
 			<div>
-				<div>
+				<div className="div-bem-vindo">
 					<Typography className="text-bem-vindo">Olá {user?.name} 👋🏼,</Typography>
 				</div>
 				<div className="linha-bloco">
 					<BlocoDashboard
-						component={CalendarComponent}
+						component={CalendarDashComponent}
 						componentProps={{ agendamentos: agendamentos.agendamentos }}
-					/>
-					<BlocoDashboard
-						component={ConversasComponent}
-						componentProps={{ conversations: conversations, onChatSelect: irParaConversaSelecionada }}
 					/>
 				</div>
 				<div className="linha-bloco">
 					<BlocoDashboard component={BarChartComponent} componentProps={{ data: mockData }} />
+					<BlocoDashboard
+						component={ConversasComponent}
+						componentProps={{ conversations: conversations, onChatSelect: irParaConversaSelecionada }}
+					/>
 				</div>
 			</div>
 		</div>
