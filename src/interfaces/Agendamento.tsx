@@ -3,12 +3,19 @@ export interface Agendamentos {
 }
 
 export interface Agendamento {
-	id: string;
+	id: number;
 	cpfUser: string;
 	nomeUser: string;
 	dataInicial: string;
 	dataFinal: string;
-	codEvento: string;
+	codAgendamento: string;
 	createdAt: string;
 	updatedAt: string;
+	observation: string;
+}
+
+export interface EditAgendamento {
+	dataInicial: string;
+	dataFinal: string;
+	observation: string;
 }

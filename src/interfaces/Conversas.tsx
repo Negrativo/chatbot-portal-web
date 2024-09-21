@@ -12,7 +12,7 @@ export interface Chat {
 }
 
 export interface Chats {
-	chats: Chat[];
+	conversations: Chat[];
 }
 
 export interface Conversations {

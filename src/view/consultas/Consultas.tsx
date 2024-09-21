@@ -5,12 +5,12 @@ import { useNotification } from "../../context/NotificationContext";
 import { UserContext } from "../../context/UserContext";
 import "./Consultas.css";
 import { Agendamentos } from "../../interfaces/Agendamento";
-import { buscarAgendamentos } from "../../services/dashboardService";
 import { Calendar, momentLocalizer, Event } from "react-big-calendar";
 import moment from "moment";
 import "moment/locale/pt-br";
 import AgendamentoDetalhes from "../../components/AgendamentoDetalhes/AgendamentoDetalhes";
 import { CalendarEvent } from "../../interfaces/Calendario";
+import { buscarAgendamentos, excluirAgendamento } from "../../services/agendamentoService";
 
 type Props = {};
 
@@ -68,15 +68,28 @@ const Consultas: React.FC<Props> = (props) => {
 
 	useEffect(() => {
 		const parsedEvents = agendamentos.agendamentos.map((evento) => ({
+			id: evento.id,
+			codAgendamento: evento.codAgendamento,
+			paciente: evento.nomeUser,
+			observation: evento.observation,
 			start: new Date(evento.dataInicial),
 			end: new Date(evento.dataFinal),
-			title: evento.nomeUser,
 		}));
 		setEvents(parsedEvents);
 	}, [agendamentos]);
 
 	const handleSelectEvent = (event: CalendarEvent) => {
 		setSelectedEvent(event);
+	};
+
+	const handleDelete = async (codAgendamento: string) => {
+		try {
+			await excluirAgendamento(codAgendamento);
+			triggerNotification("Agendamento excluído com sucesso!", "success");
+		} catch (error) {
+			console.error("Erro ao excluir agendamento:", error);
+			triggerNotification("Ocorreu um erro ao excluir o agendamento.", "error");
+		}
 	};
 
 	return (
@@ -102,7 +115,7 @@ const Consultas: React.FC<Props> = (props) => {
 				/>
 			</div>
 			<div className="consulta-container">
-				<AgendamentoDetalhes selectedEvent={selectedEvent} />
+				<AgendamentoDetalhes selectedEvent={selectedEvent} onDelete={handleDelete} />
 			</div>
 		</div>
 	);

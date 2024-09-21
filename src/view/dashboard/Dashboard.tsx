@@ -3,7 +3,7 @@ import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useNotification } from "../../context/NotificationContext";
 import { UserContext } from "../../context/UserContext";
-import { buscarAgendamentos, buscarConversas } from "../../services/dashboardService";
+import { buscarDadosGrafico } from "../../services/dashboardService";
 import CalendarDashComponent from "../../components/Calendar/Calendar";
 import { Agendamentos } from "../../interfaces/Agendamento";
 import BlocoDashboard from "../../components/BlocoDashboard/BlocoDashboard";
@@ -11,6 +11,9 @@ import "./Dashboard.css";
 import ConversasComponent from "../../components/ConversasDash/ConversasDash";
 import BarChartComponent from "../../components/GraficoColuna/GraficoColuna";
 import { Chat, Conversations } from "../../interfaces/Conversas";
+import { EstatisticaDash } from "../../interfaces/EstatisticaDash";
+import { buscarConversas } from "../../services/conversaService";
+import { buscarAgendamentos } from "../../services/agendamentoService";
 
 type Props = {};
 
@@ -20,10 +23,16 @@ const mockData = [
 	// ... mais dados
 ];
 
+const estatisticaNull: EstatisticaDash = {
+	conversas: { mesAnterior: 0, mesAtual: 0 },
+	agendamentos: { mesAnterior: 0, mesAtual: 0 },
+};
+
 const Dashboard: React.FC<Props> = (props) => {
 	const { triggerNotification } = useNotification();
 	const { user } = useContext(UserContext);
 	const [agendamentos, setAgendamentos] = useState<Agendamentos>({ agendamentos: [] });
+	const [estatisticaDash, setEstatisticaDash] = useState<EstatisticaDash>(estatisticaNull);
 	const [isLoading, setIsLoading] = useState(false);
 	const [conversations, setConversations] = useState<Chat[]>([]);
 
@@ -76,6 +85,27 @@ const Dashboard: React.FC<Props> = (props) => {
 		};
 
 		loadChats();
+	}, [triggerNotification, user, navigate]);
+
+	useEffect(() => {
+		console.log(user);
+		if (!user) {
+			navigate("/login");
+			return;
+		}
+
+		const loadGrafico = async () => {
+			try {
+				const data = await buscarDadosGrafico();
+				console.log(data);
+				setEstatisticaDash(data);
+			} catch (error) {
+				triggerNotification("Erro ao buscar conversas!", "error");
+				console.error("Erro ao buscar conversas:", error);
+			}
+		};
+
+		loadGrafico();
 	}, [triggerNotification, user, navigate]);
 
 	function irParaConversaSelecionada(chatId: number) {}

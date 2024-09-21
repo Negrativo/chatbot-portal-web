@@ -3,37 +3,16 @@ import { Paper, Typography, TextField, InputAdornment, IconButton } from "@mui/m
 import { useNavigate } from "react-router-dom";
 import { useNotification } from "../../context/NotificationContext";
 import { UserContext } from "../../context/UserContext";
-import { buscarConversas, buscarAgendamentos } from "../../services/dashboardService";
 import { Chat, Conversations } from "../../interfaces/Conversas";
+import { buscarConversas } from "../../services/conversaService";
 import CircularProgress from "@mui/material/CircularProgress";
-import { Agendamentos } from "../../interfaces/Agendamento";
-import "./Conversas.css";
 import ConversaComponent from "../../components/Conversa/conversa";
 import SearchIcon from "@mui/icons-material/Search";
 import SendIcon from "@mui/icons-material/Send";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
-import conversasMock from "../../mock/conversas.json";
+import "./Conversas.css";
 
 type Props = {};
-
-type Conversation = {
-	id: number;
-	name: string;
-	message: string;
-};
-
-type ConversationData = {
-	sender_id: string;
-	conversation_data: {
-		messages: {
-			type_name: string;
-			text: string;
-			timestamp: number;
-		}[];
-	};
-	createdAt: string;
-	updatedAt: string;
-};
 
 const Conversas: React.FC<Props> = (props) => {
 	const navigate = useNavigate();
@@ -146,10 +125,22 @@ const Conversas: React.FC<Props> = (props) => {
 												className={`message ${message.type_name === "user" ? "user" : "bot"}`}
 											>
 												<div className="message-header">
-													<span className="message-user">
+													<span
+														className={
+															message.type_name === "user"
+																? `message-user`
+																: `message-bot`
+														}
+													>
 														{message.type_name === "user" ? "Usuário" : "Bot"}
 													</span>
-													<span className="message-time">
+													<span
+														className={
+															message.type_name === "user"
+																? `message-user`
+																: `message-bot`
+														}
+													>
 														{new Date(message.timestamp * 1000).toLocaleTimeString()}
 													</span>
 												</div>

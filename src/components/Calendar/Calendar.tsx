@@ -10,7 +10,7 @@ import { Typography } from "@mui/material";
 const localizer = momentLocalizer(moment);
 
 interface CalendarEvent extends Event {
-	title: string;
+	paciente: string;
 	start: Date;
 	end: Date;
 }
@@ -39,15 +39,6 @@ const CalendarDashComponent: React.FC<Agendamentos> = ({ agendamentos }) => {
 		showMore: (total: any) => `+ Ver mais (${total})`,
 	};
 
-	useEffect(() => {
-		const parsedEvents = agendamentos.map((evento) => ({
-			start: new Date(evento.dataInicial),
-			end: new Date(evento.dataFinal),
-			title: evento.nomeUser,
-		}));
-		setEvents(parsedEvents);
-	}, [agendamentos]);
-
 	const handleSelectEvent = (event: CalendarEvent) => {
 		setSelectedEvent(event);
 	};
@@ -58,9 +49,12 @@ const CalendarDashComponent: React.FC<Agendamentos> = ({ agendamentos }) => {
 
 	useEffect(() => {
 		const parsedEvents = agendamentos.map((evento) => ({
+			id: evento.id,
+			codAgendamento: evento.codAgendamento,
+			paciente: evento.nomeUser,
+			observation: evento.observation,
 			start: new Date(evento.dataInicial),
 			end: new Date(evento.dataFinal),
-			title: evento.nomeUser,
 		}));
 
 		setEvents(parsedEvents);
@@ -89,13 +83,19 @@ const CalendarDashComponent: React.FC<Agendamentos> = ({ agendamentos }) => {
 				defaultDate={dataAtual}
 				defaultView="day"
 				scrollToTime={new Date()}
+				eventPropGetter={(event) => ({
+					style: {
+						backgroundColor: "#1C5229",
+						color: "white",
+					},
+				})}
 			/>
 
 			<Modal show={!!selectedEvent} onClose={closeModal}>
 				{selectedEvent && (
 					<>
 						<h2>Detalhes do Agendamento</h2>
-						<p>Paciente: {selectedEvent.title}</p>
+						<p>Paciente: {selectedEvent.paciente}</p>
 						<p>
 							Consulta agendada entre {moment(selectedEvent.start).format("LL")} e{" "}
 							{moment(selectedEvent.end).format("LL")}

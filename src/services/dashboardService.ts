@@ -1,34 +1,13 @@
 import api from "./api";
-import { Chat, Conversations } from "../interfaces/Conversas";
-import {Agendamentos} from '../interfaces/Agendamento';
+import { EstatisticaDash } from "../interfaces/EstatisticaDash";
 
-interface conversasReturn {
-  conversations: Conversations[]
-}
-
-interface chatReturn {
-  conversations: Chat[];
-}
-
-export const buscarConversas = async (): Promise<chatReturn> => {
+export const buscarDadosGrafico = async (): Promise<EstatisticaDash> => {
   try {
-      const response = await api.get(`/conversa/buscar`);
+      const response = await api.get(`/dashboard/grafico`);
       console.log(response.data)
       return response.data;
   } catch (error) {
     console.error('Error logging in:', error);
-    return {conversations: []};
-  }
-};
-
-
-export const buscarAgendamentos = async (): Promise<Agendamentos> => {
-  try {
-      const response = await api.get(`/agendamentos`);
-      console.log(response.data)
-      return response.data;
-  } catch (error) {
-    console.error('Error logging in:', error);
-    return {agendamentos: []};
+    return {agendamentos: {mesAnterior: 0, mesAtual: 0}, conversas:{mesAnterior: 0, mesAtual: 0}};
   }
 };

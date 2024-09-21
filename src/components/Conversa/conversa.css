@@ -24,7 +24,7 @@
 }
 
 .chat-item.active {
-    background-color: #007bff; /* Fundo azul */
+    background-color: #1C5229; /* Fundo verde */
     color: white; /* Texto branco */
     border-radius: 10px;
 }

@@ -3,6 +3,7 @@ import "./sidebar.css";
 import { useNavigate } from "react-router-dom";
 import UserProfileNavbar from "../UserProfileNavbar/userProfileNavbar";
 import { UserContext } from "../../context/UserContext";
+import PermContactCalendarIcon from "@mui/icons-material/PermContactCalendar";
 
 const Sidebar = () => {
 	const { user } = useContext(UserContext);

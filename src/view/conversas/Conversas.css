@@ -141,7 +141,7 @@
   /* Mensagens do usuário (enviadas) */
   .message.user {
     align-self: flex-end;
-    background-color: #007bff;
+    background-color: #1C5229;
     color: white;
     text-align: left;
   }
@@ -190,3 +190,12 @@
     font-size: 1.2rem;
     color: rgba(0, 0, 0, 0.6);
   }
+
+  .message-user {
+    color: #fff;
+  }
+
+  .message-bot {
+    color: #333;
+  }
+  
