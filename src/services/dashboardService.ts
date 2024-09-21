@@ -1,12 +1,16 @@
 import api from "./api";
-import { Conversations } from "../interfaces/Conversas";
+import { Chat, Conversations } from "../interfaces/Conversas";
 import {Agendamentos} from '../interfaces/Agendamento';
 
 interface conversasReturn {
-    conversations: Conversations[]
+  conversations: Conversations[]
 }
 
-export const buscarConversas = async (): Promise<conversasReturn> => {
+interface chatReturn {
+  conversations: Chat[];
+}
+
+export const buscarConversas = async (): Promise<chatReturn> => {
   try {
       const response = await api.get(`/conversa/buscar`);
       console.log(response.data)

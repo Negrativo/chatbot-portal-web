@@ -1,4 +1,4 @@
-export interface Conversations {
+export interface Chat {
 	sender_id: string;
 	conversation_data: {
 		messages: {
@@ -11,11 +11,16 @@ export interface Conversations {
 	updatedAt: string;
 }
 
-// export interface Chat {
-// 	id: string;
-// 	createdAt: string;
-// 	slots: {
-// 		[key: string]: string[];
-// 	};
-// 	intent_names: string[];
-// }
+export interface Chats {
+	chats: Chat[];
+}
+
+export interface Conversations {
+	id: string;
+	createdAt: string;
+	slots: {
+		[key: string]: string[];
+	};
+	intent_names: string[];
+	created_at: string;
+}

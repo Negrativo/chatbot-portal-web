@@ -3,27 +3,16 @@ import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useNotification } from "../../context/NotificationContext";
 import { UserContext } from "../../context/UserContext";
-import { buscarAgendamentos } from "../../services/dashboardService";
-import CircularProgress from "@mui/material/CircularProgress";
+import { buscarAgendamentos, buscarConversas } from "../../services/dashboardService";
 import CalendarDashComponent from "../../components/Calendar/Calendar";
 import { Agendamentos } from "../../interfaces/Agendamento";
 import BlocoDashboard from "../../components/BlocoDashboard/BlocoDashboard";
 import "./Dashboard.css";
 import ConversasComponent from "../../components/ConversasDash/ConversasDash";
-import conversasMock from "../../mock/conversas.json";
 import BarChartComponent from "../../components/GraficoColuna/GraficoColuna";
+import { Chat, Conversations } from "../../interfaces/Conversas";
 
 type Props = {};
-
-type Conversation = {
-	id: number;
-	name: string;
-	message: string;
-};
-
-type MockData = {
-	conversation: Conversation[];
-};
 
 const mockData = [
 	{ name: "Mês atual", qtd: 1000, agendamentos: 400, conversas: 753 },
@@ -36,8 +25,7 @@ const Dashboard: React.FC<Props> = (props) => {
 	const { user } = useContext(UserContext);
 	const [agendamentos, setAgendamentos] = useState<Agendamentos>({ agendamentos: [] });
 	const [isLoading, setIsLoading] = useState(false);
-
-	const conversations: Conversation[] = conversasMock.conversation as Conversation[];
+	const [conversations, setConversations] = useState<Chat[]>([]);
 
 	const navigate = useNavigate();
 
@@ -51,9 +39,13 @@ const Dashboard: React.FC<Props> = (props) => {
 		const loadChats = async () => {
 			setIsLoading(true);
 			try {
-				const data = await buscarAgendamentos();
+				const data = await buscarConversas();
 				console.log(data);
-				setAgendamentos(data);
+				if (data && data.conversations) {
+					setConversations(data.conversations);
+				} else {
+					setConversations([]); // Garante que seja um array
+				}
 			} catch (error) {
 				triggerNotification("Erro ao buscar conversas!", "error");
 				console.error("Erro ao buscar conversas:", error);
@@ -65,11 +57,32 @@ const Dashboard: React.FC<Props> = (props) => {
 		loadChats();
 	}, [triggerNotification, user, navigate]);
 
+	useEffect(() => {
+		console.log(user);
+		if (!user) {
+			navigate("/login");
+			return;
+		}
+
+		const loadChats = async () => {
+			try {
+				const data = await buscarAgendamentos();
+				console.log(data);
+				setAgendamentos(data);
+			} catch (error) {
+				triggerNotification("Erro ao buscar conversas!", "error");
+				console.error("Erro ao buscar conversas:", error);
+			}
+		};
+
+		loadChats();
+	}, [triggerNotification, user, navigate]);
+
 	function irParaConversaSelecionada(chatId: number) {}
 
 	return (
 		<div className="container padding-20">
-			<div>
+			<div style={{ width: "100%", height: "100%" }}>
 				<div className="div-bem-vindo">
 					<Typography className="text-bem-vindo">Olá {user?.name} 👋🏼,</Typography>
 				</div>

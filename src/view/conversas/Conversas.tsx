@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useNotification } from "../../context/NotificationContext";
 import { UserContext } from "../../context/UserContext";
 import { buscarConversas, buscarAgendamentos } from "../../services/dashboardService";
-import { Conversations } from "../../interfaces/Conversas";
+import { Chat, Conversations } from "../../interfaces/Conversas";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Agendamentos } from "../../interfaces/Agendamento";
 import "./Conversas.css";
@@ -45,7 +45,7 @@ const Conversas: React.FC<Props> = (props) => {
 	const [selectedChat, setSelectedChat] = useState<string | null>(null);
 	const [searchTerm, setSearchTerm] = useState<string>("");
 	const [newMessage, setNewMessage] = useState("");
-	const [conversations, setConversations] = useState<ConversationData[]>([]);
+	const [conversations, setConversations] = useState<Chat[]>([]);
 
 	useEffect(() => {
 		console.log(user);
