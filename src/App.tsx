@@ -7,6 +7,7 @@ import RecuperarSenha from "./view/recuperarSenha/recuperarSenha";
 import Sidebar from "./components/Sidebar/sidebar";
 import Conversas from "./view/conversas/Conversas";
 import Consultas from "./view/consultas/Consultas";
+import UsuariosPage from "./view/usuarios/Usuarios";
 
 function App() {
 	return (
@@ -18,6 +19,7 @@ function App() {
 				<Route path="/dashboard" element={<WithNavigationDrawer component={Dashboard} />} />
 				<Route path="/conversas" element={<WithNavigationDrawer component={Conversas} />} />
 				<Route path="/consultas" element={<WithNavigationDrawer component={Consultas} />} />
+				<Route path="/usuarios" element={<WithNavigationDrawer component={UsuariosPage} />} />
 				<Route path="*" element={<NotFoundScreen />} />
 			</Routes>
 		</Router>

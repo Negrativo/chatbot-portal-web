@@ -7,7 +7,7 @@ import IconButton from "@mui/material/IconButton";
 import { CalendarEvent } from "../../interfaces/Calendario";
 import { editarAgendamento } from "../../services/agendamentoService";
 import { useNotification } from "../../context/NotificationContext";
-import SaveIcon from "@mui/icons-material/Save";
+import TextAreaObservacao from "../TextAreaObservacao";
 
 interface AgendamentoDetalhesProps {
 	selectedEvent: CalendarEvent | null;
@@ -79,41 +79,11 @@ const AgendamentoDetalhes: React.FC<AgendamentoDetalhesProps> = ({ selectedEvent
 						</p>
 
 						{/* Bloco de observação */}
-						<div className="observation-section">
-							<p>Observação:</p>
-							{isEditing ? (
-								<>
-									<textarea
-										placeholder="Observação"
-										value={observation}
-										onChange={(e) => setObservation(e.target.value)}
-										rows={3}
-										className="textarea"
-									/>
-									<div className="botao-salvar">
-										<IconButton
-											aria-label="save"
-											onClick={handleSave}
-											sx={{
-												backgroundColor: "#1C5229",
-												color: "#fff", // Texto e ícone brancos
-												borderRadius: "8px", // Bordas levemente arredondadas
-												padding: "8px 16px", // Ajusta o espaçamento interno
-												"&:hover": {
-													backgroundColor: "#15401e", // Cor ao passar o mouse
-												},
-											}}
-										>
-											<SaveIcon sx={{ color: "#fff", marginRight: "8px" }} />{" "}
-											{/* Ícone branco e espaçamento */}
-											Salvar
-										</IconButton>
-									</div>
-								</>
-							) : (
-								<p>{observation || "Nenhuma observação."}</p>
-							)}
-						</div>
+						<TextAreaObservacao
+							handleSave={handleSave}
+							observationText={observation}
+							isEditing={isEditing}
+						/>
 					</div>
 				</>
 			)}

@@ -3,6 +3,7 @@ import { Typography } from "@mui/material";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
 import { EstatisticaDash } from "../../interfaces/EstatisticaDash";
 import { buscarDadosGrafico } from "../../services/dashboardService";
+import { corPrimaria } from "../../util/stylesData";
 
 interface ChartData {
 	name: string;
@@ -50,7 +51,7 @@ const BarChartComponent: React.FC = () => {
 				<YAxis />
 				<Tooltip />
 				<Legend />
-				<Bar dataKey="agendamentos" fill="#1C5229" />
+				<Bar dataKey="agendamentos" fill={corPrimaria} />
 				<Bar dataKey="conversas" fill="#0045af" />
 			</BarChart>
 		</div>

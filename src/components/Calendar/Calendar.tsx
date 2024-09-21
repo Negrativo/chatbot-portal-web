@@ -6,6 +6,7 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import Modal from "../Modal/Modal";
 import { Agendamentos } from "../../interfaces/Agendamento";
 import { Typography } from "@mui/material";
+import { corPrimaria } from "../../util/stylesData";
 
 const localizer = momentLocalizer(moment);
 
@@ -85,7 +86,7 @@ const CalendarDashComponent: React.FC<Agendamentos> = ({ agendamentos }) => {
 				scrollToTime={new Date()}
 				eventPropGetter={(event) => ({
 					style: {
-						backgroundColor: "#1C5229",
+						backgroundColor: corPrimaria,
 						color: "white",
 					},
 				})}

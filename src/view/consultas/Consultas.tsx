@@ -11,6 +11,7 @@ import "moment/locale/pt-br";
 import AgendamentoDetalhes from "../../components/AgendamentoDetalhes/AgendamentoDetalhes";
 import { CalendarEvent } from "../../interfaces/Calendario";
 import { buscarAgendamentos, excluirAgendamento } from "../../services/agendamentoService";
+import { corPrimaria } from "../../util/stylesData";
 
 type Props = {};
 
@@ -108,7 +109,7 @@ const Consultas: React.FC<Props> = (props) => {
 					messages={messages}
 					eventPropGetter={(event) => ({
 						style: {
-							backgroundColor: "#1C5229",
+							backgroundColor: corPrimaria,
 							color: "white",
 						},
 					})}

@@ -23,7 +23,7 @@ const Sidebar = () => {
 			</div>
 			<nav className="nav-group-itens">
 				<ul className="nav-ul-itens">
-					{["dashboard", "conversas", "consultas", "renda", "suporte", "ajuda"].map((item) => (
+					{["dashboard", "conversas", "consultas", "usuarios", "suporte", "ajuda"].map((item) => (
 						<li
 							key={item}
 							className={`nav-item ${active === item ? "active cor-primaria" : ""}`}
