@@ -34,7 +34,7 @@ const ConversaComponent: React.FC<Conversation> = ({ conversation, onChatSelect,
 	return (
 		<div
 			key={conversation.sender_id}
-			className={`chat-item ${selectedChatId === conversation.sender_id ? "active" : ""}`}
+			className={`chat-item ${selectedChatId === conversation.sender_id ? "active cor-primaria" : ""}`}
 			onClick={handleChatClick}
 		>
 			<div className="chat-user-icon">{getInitial(conversation.sender_id)}</div>

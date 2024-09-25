@@ -3,11 +3,10 @@ import "./sidebar.css";
 import { useNavigate } from "react-router-dom";
 import UserProfileNavbar from "../UserProfileNavbar/userProfileNavbar";
 import { UserContext } from "../../context/UserContext";
-import PermContactCalendarIcon from "@mui/icons-material/PermContactCalendar";
 
 const Sidebar = () => {
 	const { user } = useContext(UserContext);
-	const [active, setActive] = useState("dashboard");
+	const [active, setActive] = useState("Geral");
 
 	const navigate = useNavigate();
 
@@ -23,7 +22,7 @@ const Sidebar = () => {
 			</div>
 			<nav className="nav-group-itens">
 				<ul className="nav-ul-itens">
-					{["dashboard", "conversas", "consultas", "usuarios", "suporte", "ajuda"].map((item) => (
+					{["Geral", "Conversas", "Calendario", "Pacientes", "Suporte"].map((item) => (
 						<li
 							key={item}
 							className={`nav-item ${active === item ? "active cor-primaria" : ""}`}
@@ -31,7 +30,6 @@ const Sidebar = () => {
 						>
 							<img src={`/icons/${item}.svg`} alt={item} />
 							<span>{item.charAt(0).toUpperCase() + item.slice(1)}</span>
-							{active !== item && <img className="seta" src="/icons/seta-sidebar.svg" alt="seta" />}
 						</li>
 					))}
 				</ul>

@@ -141,7 +141,6 @@
   /* Mensagens do usuário (enviadas) */
   .message.user {
     align-self: flex-end;
-    background-color: #1C5229;
     color: white;
     text-align: left;
   }

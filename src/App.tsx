@@ -8,6 +8,7 @@ import Sidebar from "./components/Sidebar/sidebar";
 import Conversas from "./view/conversas/Conversas";
 import Consultas from "./view/consultas/Consultas";
 import UsuariosPage from "./view/usuarios/Usuarios";
+import SuportePage from "./view/suporte/Suporte";
 
 function App() {
 	return (
@@ -16,10 +17,11 @@ function App() {
 				<Route path="/" element={<Navigate replace to="/login" />} />
 				<Route path="/login" element={<Login />} />
 				<Route path="/recuperarSenha" element={<RecuperarSenha />} />
-				<Route path="/dashboard" element={<WithNavigationDrawer component={Dashboard} />} />
-				<Route path="/conversas" element={<WithNavigationDrawer component={Conversas} />} />
-				<Route path="/consultas" element={<WithNavigationDrawer component={Consultas} />} />
-				<Route path="/usuarios" element={<WithNavigationDrawer component={UsuariosPage} />} />
+				<Route path="/Geral" element={<WithNavigationDrawer component={Dashboard} />} />
+				<Route path="/Conversas" element={<WithNavigationDrawer component={Conversas} />} />
+				<Route path="/Calendario" element={<WithNavigationDrawer component={Consultas} />} />
+				<Route path="/Pacientes" element={<WithNavigationDrawer component={UsuariosPage} />} />
+				<Route path="/Suporte" element={<WithNavigationDrawer component={SuportePage} />} />
 				<Route path="*" element={<NotFoundScreen />} />
 			</Routes>
 		</Router>

@@ -77,12 +77,12 @@ const UsuariosPage: React.FC<Props> = (props) => {
 					{!!usuarios &&
 						usuarios.users.map((usuario) => (
 							<InfoUsuario
-								key={usuario.cpf} // Certifique-se de adicionar uma key ao map
+								key={usuario.cpf}
 								usuario={usuario}
-								onUserSelect={() => handleOpenModal(usuario)} // Abra o modal com o usuário selecionado
+								onUserSelect={() => handleOpenModal(usuario)}
 								onExpandClick={() => handleOpenModal(usuario)}
 							/>
-						))}
+					))}
 				</div>
 
 				{!!usuarioSelecionado && (

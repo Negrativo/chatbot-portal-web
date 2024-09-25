@@ -23,8 +23,7 @@
     border-radius: 10px;
 }
 
-.chat-item.active {
-    background-color: #1C5229; /* Fundo verde */
+.chat-item.active { 
     color: white; /* Texto branco */
     border-radius: 10px;
 }

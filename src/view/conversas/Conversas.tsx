@@ -122,13 +122,15 @@ const Conversas: React.FC<Props> = (props) => {
 										{selectedConversation.conversation_data.messages.map((message, index) => (
 											<div
 												key={index}
-												className={`message ${message.type_name === "user" ? "user" : "bot"}`}
+												className={`message ${
+													message.type_name === "user" ? "user cor-primaria" : "bot"
+												}`}
 											>
 												<div className="message-header">
 													<span
 														className={
 															message.type_name === "user"
-																? `message-user`
+																? `message-user cor-primaria`
 																: `message-bot`
 														}
 													>
@@ -137,7 +139,7 @@ const Conversas: React.FC<Props> = (props) => {
 													<span
 														className={
 															message.type_name === "user"
-																? `message-user`
+																? `message-user cor-primaria`
 																: `message-bot`
 														}
 													>

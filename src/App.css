@@ -58,7 +58,11 @@
 }
 
 .cor-primaria {
-  background-color: #1C5229;
+  background-color: #1566FE ;
+}
+
+.cor-secundaria {
+  background-color: #172154;
 }
 
 @keyframes App-logo-spin {

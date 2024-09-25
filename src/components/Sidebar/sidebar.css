@@ -2,7 +2,8 @@
   background-color: #fff;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   display: flex;
-  min-width: 15vw;
+  width: 170px;
+  max-width: 15vw;
   flex-direction: column;
   justify-content: space-between;
 }
@@ -23,7 +24,6 @@ nav ul {
 
 .nav-group-itens {
   height: 100%;
-  width: 18vw;
   display: flex;
   justify-content: center;
 }
@@ -59,8 +59,12 @@ nav ul {
   border-radius: 8px;
 }
 
+.nav-item.active img {
+  filter: brightness(0) invert(1);
+}
+
 .nav-item.active span {
-  color: white;
+  color: #FAFAFA;
 }
 
 .nav-item .seta {

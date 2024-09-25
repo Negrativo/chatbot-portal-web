@@ -41,7 +41,7 @@ const Login: React.FC = () => {
 				}
 				localStorage.setItem("token", loginData.token);
 				triggerNotification("Logado com sucesso!", "success");
-				navigate(`/dashboard`);
+				navigate(`/Geral`);
 			} else {
 				const mensagem = loginData.message || "Ocorreu um erro inesperado!";
 				triggerNotification(mensagem, "error");

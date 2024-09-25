@@ -87,7 +87,8 @@ const CalendarDashComponent: React.FC<Agendamentos> = ({ agendamentos }) => {
 				eventPropGetter={(event) => ({
 					style: {
 						backgroundColor: corPrimaria,
-						color: "white",
+						color: "#FAFAFA",
+						height: 20,
 					},
 				})}
 			/>
