@@ -71,7 +71,7 @@ const UsuariosPage: React.FC<Props> = (props) => {
 		<div className="container padding-20">
 			<div style={{ width: "100%", height: "100%" }}>
 				<Typography align="center" style={{ fontWeight: "bold" }} fontSize={24}>
-					Usuários
+					Pacientes
 				</Typography>
 				<div className="user-list">
 					{!!usuarios &&
@@ -82,14 +82,14 @@ const UsuariosPage: React.FC<Props> = (props) => {
 								onUserSelect={() => handleOpenModal(usuario)}
 								onExpandClick={() => handleOpenModal(usuario)}
 							/>
-					))}
+						))}
 				</div>
 
 				{!!usuarioSelecionado && (
 					<Modal open={open} onClose={handleCloseModal}>
 						<Box className="modal-box">
 							<div className="header cor-primaria">
-								<h2>Detalhes do usuário</h2>
+								<h2>Detalhes do paciente</h2>
 								<div className="icons">
 									{!isEditing && (
 										<IconButton aria-label="edit" onClick={handleEditClick}>
@@ -101,15 +101,17 @@ const UsuariosPage: React.FC<Props> = (props) => {
 									</IconButton>
 								</div>
 							</div>
-							<Typography>Nome: {usuarioSelecionado.name}</Typography>
-							<Typography>Telefone: {usuarioSelecionado?.phone_number}</Typography>
-							<Typography>E-mail: {usuarioSelecionado?.email}</Typography>
-							<Typography>CPF: {usuarioSelecionado.cpf}</Typography>
-							<TextAreaObservacao
-								observationText={usuarioSelecionado.observation}
-								handleSave={() => {}}
-								isEditing={isEditing}
-							/>
+							<div className="user-detais-modal">
+								<Typography>Nome: {usuarioSelecionado.name}</Typography>
+								<Typography>Telefone: {usuarioSelecionado?.phone_number}</Typography>
+								<Typography>E-mail: {usuarioSelecionado?.email}</Typography>
+								<Typography>CPF: {usuarioSelecionado.cpf}</Typography>
+								<TextAreaObservacao
+									observationText={usuarioSelecionado.observation}
+									handleSave={() => {}}
+									isEditing={isEditing}
+								/>
+							</div>
 						</Box>
 					</Modal>
 				)}

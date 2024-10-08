@@ -1,9 +1,10 @@
 import React, { useState, useContext, useEffect } from "react";
-import { TextField, Button, Typography } from "@mui/material";
+import { TextField, Button, Typography, InputAdornment, FormControlLabel, Checkbox } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { loginWeb } from "../../services/loginService";
+import { loginWeb, refreshToken } from "../../services/loginService";
 import { useNotification } from "../../context/NotificationContext";
 import { UserContext } from "../../context/UserContext";
+import { jwtDecode } from "jwt-decode";
 import Lottie from "react-lottie";
 import axios from "axios";
 import "./login.css";
@@ -15,9 +16,31 @@ const Login: React.FC = () => {
 	const [login, setLogin] = useState("");
 	const [senha, setSenha] = useState("");
 	const [animationData, setAnimationData] = useState(null);
+	const [manterConectado, setManterConectado] = useState(false);
 	const navigate = useNavigate();
 
 	useEffect(() => {
+		const token = localStorage.getItem("token");
+		console.log(11111111111111111111111111111, token);
+		if (token) {
+			const decodedToken: any = jwtDecode(token);
+			const currentTime = Date.now() / 10000;
+			console.log(decodedToken);
+			// If the token is valid, refresh it
+			if (decodedToken.exp > currentTime) {
+				refreshToken(token).then((newToken) => {
+					if (newToken) {
+						localStorage.setItem("token", newToken);
+						triggerNotification("Sessão renovada com sucesso!", "success");
+						navigate(`/Geral`);
+					} else {
+						localStorage.removeItem("token");
+					}
+				});
+			} else {
+				localStorage.removeItem("token");
+			}
+		}
 		axios.get("/AnimationLogin.json").then((response) => {
 			setAnimationData(response.data);
 		});
@@ -31,15 +54,25 @@ const Login: React.FC = () => {
 		setSenha(event.target.value);
 	};
 
+	const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setManterConectado(event.target.checked);
+	};
+
 	async function handleLoginWeb() {
 		localStorage.removeItem("token");
-		if (validaDados()) {
+		sessionStorage.removeItem("token");
+		if (login && senha) {
 			const loginData = await loginWeb(login, senha);
 			if (loginData.token) {
 				if (loginData.adminData) {
-					loginUser(loginData.adminData); // Certifique-se que adminData existe
+					loginUser(loginData.adminData);
 				}
-				localStorage.setItem("token", loginData.token);
+				// Salva o token no localStorage ou sessionStorage baseado no estado do checkbox
+				if (manterConectado) {
+					localStorage.setItem("token", loginData.token);
+				} else {
+					sessionStorage.setItem("token", loginData.token);
+				}
 				triggerNotification("Logado com sucesso!", "success");
 				navigate(`/Geral`);
 			} else {
@@ -88,7 +121,11 @@ const Login: React.FC = () => {
 						Insira seus dados para prosseguir:
 					</Typography>
 					<TextField label="Login" fullWidth onChange={handleCodigoChange} margin="normal" />
-					<TextField label="Senha" type="password" onChange={handleSenhaChange} fullWidth margin="normal" />
+					<TextField label="Senha" type="password" fullWidth onChange={handleSenhaChange} margin="normal" />
+					<FormControlLabel
+						control={<Checkbox checked={manterConectado} onChange={handleCheckboxChange} color="primary" />}
+						label="manter-me conectado"
+					/>
 					<Button variant="outlined" color="primary" fullWidth onClick={handleLoginWeb}>
 						Entrar
 					</Button>

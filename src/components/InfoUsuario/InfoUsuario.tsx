@@ -1,9 +1,8 @@
 import React from "react";
 import "./InfoUsuario.css";
-import { IconButton, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { Usuario } from "../../interfaces/Usuarios";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import OpenInFullIcon from "@mui/icons-material/OpenInFull";
 import { corPrimaria } from "../../util/stylesData";
 
 interface UsuarioComponent {
@@ -14,22 +13,18 @@ interface UsuarioComponent {
 
 const InfoUsuario: React.FC<UsuarioComponent> = ({ usuario, onExpandClick }) => {
 	return (
-		<div className="container-info" onClick={onExpandClick}>
+		<div className="container-info">
 			{" "}
 			{/* Aqui o onClick vai expandir o modal */}
 			<div className="div-icon-user">
-				<AccountCircleIcon sx={{ color: corPrimaria, height: 40, width: 40 }} />
-				<IconButton
-					className="expand-icon"
-					onClick={onExpandClick} // Call the parent's modal open function
-					sx={{ position: "absolute", top: 8, right: 8 }}
-				>
-					<OpenInFullIcon sx={{ color: corPrimaria, height: 15, width: 15 }} />
-				</IconButton>
+				<AccountCircleIcon sx={{ color: corPrimaria, height: 90, width: 90 }} />
 			</div>
 			<div className="div-dados-user">
 				<Typography>{usuario.name}</Typography>
 				<Typography>{usuario.phone_number}</Typography>
+			</div>
+			<div className="div-user-details cor-primaria" onClick={onExpandClick}>
+				<Typography>Detalhes</Typography>
 			</div>
 		</div>
 	);

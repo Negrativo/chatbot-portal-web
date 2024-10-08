@@ -103,3 +103,27 @@ nav ul {
   font-size: 16px;
   color: #888;
 }
+
+.modal {
+  position: absolute;
+    bottom: 80px;
+    left: 10px;
+    background-color: white;
+    padding: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    width: 150px;
+}
+
+.logout-btn {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.logout-btn:hover {
+  background-color: darkred;
+}

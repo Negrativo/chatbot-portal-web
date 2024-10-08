@@ -94,3 +94,25 @@ export const recuperarSenha = async (token: string, newPassword: string): Promis
         }
     }
   };
+
+  export const refreshToken = async (token: string): Promise<string | null> => {
+    try {
+        const response = await api.post(`/refreshToken`, { token });
+        console.log('Token refreshed:', response.data.newToken);
+        if (response.data.newToken) {
+            api.setAuthToken(response.data.newToken); 
+            return response.data.newToken;
+        }
+        return null;
+    } catch (error) {
+        console.error('Error refreshing token:', error);
+        const axiosError = error as AxiosError<ApiMessageResponse>;
+        if (axiosError.response) {
+            const message = axiosError.response.data.message;
+            console.error('Error refreshing token:', message);
+        } else {
+            console.error('Error refreshing token:', axiosError.message);
+        }
+        return null;
+    }
+};

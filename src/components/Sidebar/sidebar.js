@@ -5,14 +5,24 @@ import UserProfileNavbar from "../UserProfileNavbar/userProfileNavbar";
 import { UserContext } from "../../context/UserContext";
 
 const Sidebar = () => {
-	const { user } = useContext(UserContext);
+	const { user, logoutUser } = useContext(UserContext); // Assuming `logout` is a function in your context
 	const [active, setActive] = useState("Geral");
+	const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
 
 	const navigate = useNavigate();
 
 	const handleItemClick = (page) => {
 		setActive(page);
 		navigate(`/${page}`);
+	};
+
+	const handleLogoutClick = () => {
+		logoutUser(); // Function to log out the user
+		navigate("/login"); // Redirect to login page after logout
+	};
+
+	const toggleModal = () => {
+		setIsModalOpen(!isModalOpen); // Toggle modal visibility
 	};
 
 	return (
@@ -36,9 +46,17 @@ const Sidebar = () => {
 			</nav>
 			<div className="group-user-profile">
 				<UserProfileNavbar imageUrl={""} />
-				<div className="user-info">
+				<div className="user-info" onClick={toggleModal}>
 					<span>{user?.name}</span>
 				</div>
+
+				{isModalOpen && (
+					<div className="modal">
+						<button onClick={handleLogoutClick} className="logout-btn">
+							Logout
+						</button>
+					</div>
+				)}
 			</div>
 		</div>
 	);
