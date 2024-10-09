@@ -13,6 +13,7 @@ const Sidebar = () => {
 
 	const handleItemClick = (page) => {
 		setActive(page);
+		page = page === "Médicos" ? "Medicos" : page;
 		navigate(`/${page}`);
 	};
 
@@ -32,7 +33,7 @@ const Sidebar = () => {
 			</div>
 			<nav className="nav-group-itens">
 				<ul className="nav-ul-itens">
-					{["Geral", "Conversas", "Calendario", "Pacientes", "Suporte"].map((item) => (
+					{["Geral", "Conversas", "Calendario", "Pacientes", "Médicos", "Suporte"].map((item) => (
 						<li
 							key={item}
 							className={`nav-item ${active === item ? "active cor-primaria" : ""}`}

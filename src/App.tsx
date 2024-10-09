@@ -8,6 +8,7 @@ import Sidebar from "./components/Sidebar/sidebar";
 import Conversas from "./view/conversas/Conversas";
 import Consultas from "./view/consultas/Consultas";
 import UsuariosPage from "./view/usuarios/Usuarios";
+import MedicosPage from "./view/medicos/Medicos";
 import SuportePage from "./view/suporte/Suporte";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
 				<Route path="/Conversas" element={<WithNavigationDrawer component={Conversas} />} />
 				<Route path="/Calendario" element={<WithNavigationDrawer component={Consultas} />} />
 				<Route path="/Pacientes" element={<WithNavigationDrawer component={UsuariosPage} />} />
+				<Route path="/Medicos" element={<WithNavigationDrawer component={MedicosPage} />} />
 				<Route path="/Suporte" element={<WithNavigationDrawer component={SuportePage} />} />
 				<Route path="*" element={<NotFoundScreen />} />
 			</Routes>

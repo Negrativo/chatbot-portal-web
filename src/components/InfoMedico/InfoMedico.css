@@ -1,0 +1,44 @@
+.container-info {
+    width: 200px;
+    height: 215px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #00000025; /* Adicionei 'solid' para o border */
+    box-shadow: 0px 0px 2px 1px #00000025;
+    border-radius: 4px;
+    position: relative;
+    align-items: center;
+}
+
+.div-icon-user {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5px;
+    margin-bottom: 5px;  
+    position: relative;
+}
+
+.div-dados-user {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.expand-icon {
+    position: absolute;
+    top: 0px;
+    right: 8px;
+}
+
+.div-user-details {
+    margin-top: 5px;
+    border-radius: 4px;
+    display: flex;
+    width: 150px;
+    height: 30px;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}

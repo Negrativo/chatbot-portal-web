@@ -1,0 +1,25 @@
+.modal-box {
+    background-color: #F3F3F3; /* Fundo branco para o modal */
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    padding: 15px; /* Espaçamento interno */
+    width: 500px; /* Largura máxima */
+    margin: auto; /* Centralizar */
+    top: 50%; /* Centralizar verticalmente */
+    left: 50%; /* Centralizar horizontalmente */
+    position: absolute; /* Tornar a posição do modal absoluta */
+    transform: translate(-50%, -50%); /* Ajustar a centralização */
+}
+
+.user-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 2fr));
+    gap: '5px'
+}
+
+.user-detais-modal {
+    margin-top: 10px;
+    padding: 15px;
+    background-color: #FFFFFF;
+    height: 100%;
+}
