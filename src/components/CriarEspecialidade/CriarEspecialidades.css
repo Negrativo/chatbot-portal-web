@@ -1,0 +1,36 @@
+.input-group {
+    display: flex;
+    align-items: center;
+  }
+  
+.div-especialidades {
+    height: 100%;
+    width: 100%;
+    max-height: 400px;
+    min-height: 100px;
+    overflow-y: auto; /* Para permitir rolagem, se necessário */
+  }
+  
+  .especialidade {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+  }
+  
+  .remove-btn {
+    background-color: transparent;
+    border: none;
+    color: red;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .remove-btn:hover {
+    color: darkred;
+  }
+  

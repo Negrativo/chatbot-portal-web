@@ -25,9 +25,9 @@ export const excluirUsuario = async (idUsuario: string): Promise<MensagemReturn>
     }
 };
 
-export const editarAgendamento = async (codAgendamento: string, dadosAgendamento: Usuario): Promise<MensagemReturn> => {
+export const editarUsuario = async (codUsuario: string, usuario: Usuario): Promise<MensagemReturn> => {
     try {
-        const response = await api.put(`/agendamento/atualizar/${codAgendamento}`, dadosAgendamento);
+        const response = await api.put(`/agendamento/atualizar/${codUsuario}`, usuario);
         console.log(response.data)
         return response.data;
     } catch (error) {

@@ -1,15 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Modal, Box, Typography } from "@mui/material";
+import { Modal, Box, Typography, Button, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useNotification } from "../../context/NotificationContext";
 import { UserContext } from "../../context/UserContext";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import IconButton from "@mui/material/IconButton";
 import "./Medicos.css";
 import { buscarMedicos, excluirMedico } from "../../services/medicoService";
-import { Medico, Medicos } from "../../interfaces/Medicos";
+import { Medico } from "../../interfaces/Medicos";
 import InfoMedico from "../../components/InfoMedico/InfoMedico";
+import MedicoDetalhes from "../../components/MedicoDetalhes/MedicoDetalhes";
+import CriarMedico from "../../components/CriarMedico/CriarMedico";
+import CriarEspecialidade from "../../components/CriarEspecialidade/CriarEspecialidades";
 
 type Props = {};
 
@@ -23,21 +23,25 @@ const UsuariosPage: React.FC<Props> = (props) => {
 
 	const [medicos, setMedicos] = useState<Medico[]>();
 	const [medicoSelecionado, setMedicoSelecionado] = useState<Medico>();
-	const [open, setOpen] = useState(false);
+	const [openDetalhes, setOpenDetalhes] = useState(false);
 	const [isEditing, setIsEditing] = useState(false);
+	const [searchTerm, setSearchTerm] = useState("");
+
+	const [isAdicionarMedicoOpen, setIsAdicionarMedicoOpen] = useState(false);
+	const [isOpenEspecialidades, setIsOpenEspecialidades] = useState(false);
 
 	const handleOpenModal = (usuario: Medico) => {
 		setMedicoSelecionado(usuario);
-		setOpen(true);
+		setOpenDetalhes(true);
 	};
 
 	const handleCloseModal = () => {
 		setIsEditing(false);
-		setOpen(false);
+		setOpenDetalhes(false);
 	};
 
-	const handleEditClick = () => {
-		setIsEditing(true); // Ativa o modo de edição
+	const handleEditClick = (isEdit: boolean) => {
+		setIsEditing(isEdit);
 	};
 
 	const handleDelete = () => {
@@ -46,7 +50,25 @@ const UsuariosPage: React.FC<Props> = (props) => {
 		}
 	};
 
+	const handleAtualizarLista = () => {
+		loadMedicos();
+	};
+
+	const handleOpenEspecialidades = () => {
+		setIsOpenEspecialidades(false);
+	};
+
 	const navigate = useNavigate();
+
+	const loadMedicos = async () => {
+		try {
+			const data = await buscarMedicos();
+			console.log(data);
+			setMedicos(data);
+		} catch (error) {
+			triggerNotification("Erro ao buscar conversas!", "error");
+		}
+	};
 
 	useEffect(() => {
 		if (!user) {
@@ -54,18 +76,11 @@ const UsuariosPage: React.FC<Props> = (props) => {
 			return;
 		}
 
-		const loadGrafico = async () => {
-			try {
-				const data = await buscarMedicos();
-				console.log(data);
-				setMedicos(data);
-			} catch (error) {
-				triggerNotification("Erro ao buscar conversas!", "error");
-			}
-		};
-
-		loadGrafico();
+		loadMedicos();
 	}, [triggerNotification, user, navigate]);
+
+	// Filtrando médicos com base no termo de pesquisa
+	const medicosFiltrados = medicos?.filter((medico) => medico.nome.toLowerCase().includes(searchTerm.toLowerCase()));
 
 	return (
 		<div className="container padding-20">
@@ -73,9 +88,28 @@ const UsuariosPage: React.FC<Props> = (props) => {
 				<Typography align="center" style={{ fontWeight: "bold" }} fontSize={24}>
 					Médicos
 				</Typography>
+				<div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "20px" }}>
+					<TextField
+						fullWidth
+						variant="outlined"
+						placeholder="Pesquisar médico"
+						value={searchTerm}
+						onChange={(e) => setSearchTerm(e.target.value)}
+						style={{ marginRight: "10px" }}
+					/>
+					<div className="opcoes-medico-button cor-primaria" onClick={handleAtualizarLista}>
+						<Typography>Atualizar lista</Typography>
+					</div>
+					<div className="opcoes-medico-button cor-primaria" onClick={() => setIsAdicionarMedicoOpen(true)}>
+						<Typography>Adicionar médico</Typography>
+					</div>
+					<div className="opcoes-medico-button cor-primaria" onClick={() => setIsOpenEspecialidades(true)}>
+						<Typography>Especialidades</Typography>
+					</div>
+				</div>
 				<div className="user-list">
-					{!!medicos &&
-						medicos.map((medico) => (
+					{!!medicosFiltrados &&
+						medicosFiltrados.map((medico) => (
 							<InfoMedico
 								key={medico.id}
 								medico={medico}
@@ -86,27 +120,22 @@ const UsuariosPage: React.FC<Props> = (props) => {
 				</div>
 
 				{!!medicoSelecionado && (
-					<Modal open={open} onClose={handleCloseModal}>
-						<Box className="modal-box">
-							<div className="header cor-primaria">
-								<h2>Detalhes do Médico</h2>
-								<div className="icons">
-									{!isEditing && (
-										<IconButton aria-label="edit" onClick={handleEditClick}>
-											<EditIcon sx={{ color: "white" }} />
-										</IconButton>
-									)}
-									<IconButton aria-label="delete" onClick={handleDelete}>
-										<DeleteIcon sx={{ color: "white" }} />
-									</IconButton>
-								</div>
-							</div>
-							<div className="user-detais-modal">
-								<Typography>Nome: {medicoSelecionado.nome}</Typography>
-								<Typography>Especialidade: {medicoSelecionado.categoria.nome}</Typography>
-							</div>
-						</Box>
-					</Modal>
+					<MedicoDetalhes
+						open={openDetalhes}
+						onClose={handleCloseModal}
+						medico={medicoSelecionado}
+						isEditing={isEditing}
+						onEditClick={handleEditClick}
+						onDeleteClick={handleDelete}
+					/>
+				)}
+
+				{!!isAdicionarMedicoOpen && (
+					<CriarMedico open={isAdicionarMedicoOpen} onClose={() => setIsAdicionarMedicoOpen(false)} />
+				)}
+
+				{!!isOpenEspecialidades && (
+					<CriarEspecialidade open={isOpenEspecialidades} onClose={() => setIsOpenEspecialidades(false)} />
 				)}
 			</div>
 		</div>

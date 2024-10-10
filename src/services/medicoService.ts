@@ -1,5 +1,5 @@
 import { MensagemReturn } from "../interfaces/MensagemReturn";
-import { Medico } from "../interfaces/Medicos";
+import { EditMedico, Medico } from "../interfaces/Medicos";
 import api from "./api";
 
 // Buscar todos os médicos
@@ -39,7 +39,7 @@ export const excluirMedico = async (idMedico: string): Promise<MensagemReturn> =
 };
 
 // Atualizar médico
-export const atualizarMedico = async (idMedico: string, dadosMedico: Medico): Promise<MensagemReturn> => {
+export const atualizarMedico = async (idMedico: string, dadosMedico: EditMedico): Promise<MensagemReturn> => {
   try {
     const response = await api.put(`/medico/atualizar/${idMedico}`, dadosMedico);
     console.log(response.data);
@@ -51,7 +51,7 @@ export const atualizarMedico = async (idMedico: string, dadosMedico: Medico): Pr
 };
 
 // Cadastrar novo médico
-export const cadastrarMedico = async (dadosMedico: Medico): Promise<MensagemReturn> => {
+export const cadastrarMedico = async (dadosMedico: EditMedico): Promise<MensagemReturn> => {
   try {
     const response = await api.post(`/medico/cadastrar`, dadosMedico);
     console.log(response.data);

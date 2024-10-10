@@ -3,7 +3,7 @@ import { Modal, Box, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useNotification } from "../../context/NotificationContext";
 import { UserContext } from "../../context/UserContext";
-import { buscarUsuarios, excluirUsuario } from "../../services/usuarioService";
+import { buscarUsuarios, excluirUsuario, editarUsuario } from "../../services/usuarioService";
 import { Usuario, Usuarios } from "../../interfaces/Usuarios";
 import InfoUsuario from "../../components/InfoUsuario/InfoUsuario";
 import TextAreaObservacao from "../../components/TextAreaObservacao";
@@ -66,6 +66,12 @@ const UsuariosPage: React.FC<Props> = (props) => {
 
 		loadGrafico();
 	}, [triggerNotification, user, navigate]);
+
+	const handleEditUser = () => {
+		if (!!usuarioSelecionado) {
+			editarUsuario(usuarioSelecionado?.id.toString(), usuarioSelecionado);
+		}
+	};
 
 	return (
 		<div className="container padding-20">

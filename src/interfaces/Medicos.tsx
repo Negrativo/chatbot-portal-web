@@ -1,3 +1,5 @@
+import { CategoriaAtendimento } from "./CategoriaAtendimento";
+
 export interface Medicos {
 	medicos: Medico[];
 }
@@ -8,7 +10,7 @@ export interface Medico {
 	categoria: CategoriaAtendimento;
 }
 
-export interface CategoriaAtendimento {
-	id: number;
+export interface EditMedico {
 	nome: string;
+	categoriaId: number;
 }
