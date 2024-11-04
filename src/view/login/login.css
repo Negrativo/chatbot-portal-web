@@ -9,17 +9,61 @@
   }
 
   .container-dados-login {
-    flex: 1;
+    width: 50%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 32px;
     background-color: #fff;
     border-radius: 0px 33px 33px 0px;
     padding: 100px;
     font-family: 'SFProDisplay-Regular';
   }
+
+  .body-login {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .header-login {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 25px;
+  }
+
+  .text-header {
+    display: flex;
+    align-items: center; /* Alinha o texto e o ícone verticalmente */
+    gap: 10px; /* Espaço entre o texto e o ícone */
+    color: #172154; /* Cor do texto */
+  }
+  
+  .text-header .MuiTypography-root {
+    font-size: 4rem; /* Tamanho grande para o texto */
+    font-weight: bold; /* Deixa o texto em negrito */
+  }
+  
+  .text-header img {
+    width: 48px; /* Largura do ícone */
+    height: 48px; /* Altura do ícone */
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #283593; /* Cor azul escuro do texto */
+    font-weight: bold;
+    font-size: 16px;
+    width: 100%;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    flex: 1;
+    border-bottom: 1px solid #283593; /* Linha azul escura */
+  }
+  
   
   /* Estilo para o contêiner de Lottie */
   .lottie-container { 
@@ -33,14 +77,62 @@
   
   /* Estilos adicionais */
   .login-container .MuiTypography-h4 {
-    margin-bottom: 16px;
+    margin-bottom: 0px;
   }
   
-  .login-container .MuiTextField-root {
-    margin-bottom: 16px;
+  .loginButtons {
+    display: flex;
+    flex-direction: column;
   }
-  
-  .login-container .MuiButton-root {
-    margin-top: 16px;
+
+  .checkbox {
+    margin-bottom: 20px;
   }
-  
+
+.checkbox-round .MuiCheckbox-root {
+  padding: 4px; 
+}
+
+.checkbox-round .MuiSvgIcon-root {
+  border-radius: 50%; 
+  width: 18px; 
+  height: 18px; 
+}
+
+.div-textfields {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.custom-textfield .MuiOutlinedInput-root {
+  border-radius: 8px; /* Bordas arredondadas */
+  background-color: #E3F2FD; /* Fundo azul claro */
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1); /* Sombra leve */
+}
+
+.custom-textfield .MuiOutlinedInput-notchedOutline {
+  border: none; /* Remove a borda padrão */
+}
+
+.custom-textfield .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+  border: none; /* Remove a borda ao passar o mouse */
+}
+
+.custom-textfield .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border: none; /* Remove a borda ao focar */
+}
+
+.custom-textfield .MuiInputLabel-root {
+  color: #283593; /* Cor do label quando não está focado */
+  font-weight: bold; /* Label em negrito */
+}
+
+.custom-textfield .MuiInputLabel-root.Mui-focused {
+  color: #2196F3; /* Cor do label quando o campo está focado */
+}
+
+.custom-textfield .MuiInputBase-input::placeholder {
+  color: #B0BEC5; /* Cor do placeholder */
+  font-style: italic; /* Estilo itálico no placeholder */
+}

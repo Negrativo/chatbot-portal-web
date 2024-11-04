@@ -2,24 +2,34 @@
   background-color: #fff;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   display: flex;
-  width: 170px;
-  max-width: 15vw;
   flex-direction: column;
   justify-content: space-between;
+  overflow: hidden;
+  transition: width 0.3s ease; /* Smooth transition for width */
+}
+
+.arrow-expand {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.sidebar.expanded {
+  width: 180px;
+}
+
+.sidebar.collapsed {
+  width: 90px;
 }
 
 .logo {
   padding: 20px;
   text-align: center;
+  cursor: pointer;
 }
 
-.logo img {
-  width: 100px;
-}
-
-nav ul {
-  list-style: none;
-  padding: 0;
+.logo  img {
+  width: 48px; /* Largura do ícone */
+  height: 48px; /* Altura do ícone */
 }
 
 .nav-group-itens {
@@ -29,8 +39,8 @@ nav ul {
 }
 
 .nav-ul-itens {
-  width: 80%;
-  display: flex;
+  display: flex; 
+  padding: 0px;
   justify-content: flex-start;
   flex-direction: column;
   align-items: flex-start;
@@ -39,19 +49,32 @@ nav ul {
 .nav-item {
   display: flex;
   align-items: center;
+  margin-bottom: 5px;
   padding: 15px 10px;
   cursor: pointer;
+  height: 40px;
   width: 100%;
 }
 
 .nav-item img {
   width: 24px;
   margin-right: 10px;
+  transition: margin-right 0.3s ease; /* Smooth transition for spacing */
+}
+
+.sidebar.collapsed .nav-item img {
+  margin-right: 0; /* Remove margin when collapsed */
 }
 
 .nav-item span {
   font-size: 16px;
   color: #333;
+  transition: opacity 0.3s ease; /* Smooth transition for text visibility */
+}
+
+.sidebar.collapsed .nav-item span {
+  opacity: 0; /* Hide text when collapsed */
+  pointer-events: none; /* Prevent interaction when hidden */
 }
 
 .nav-item.active {
@@ -67,52 +90,32 @@ nav ul {
   color: #FAFAFA;
 }
 
-.nav-item .seta {
-  margin-left: auto;
-  margin-right: 10px;
-  width: 15px;
-  height: 15px;
-}
-
 .group-user-profile {
   display: flex;
   flex-direction: row;
   margin: 15px;
 }
 
-.user-profile {
-  display: flex;
-  align-items: center;
-  padding: 20px;
-}
-
-.user-profile img {
-  width: 40px;
-  border-radius: 50%;
-  margin-right: 10px;
-}
-
 .user-info {
   align-items: center;
   display: flex;
+  transition: opacity 0.3s ease; /* Smooth transition for user info visibility */
 }
 
-.user-info span {
-  display: block;
-  font-weight: bold;
-  font-size: 16px;
-  color: #888;
+.sidebar.collapsed .user-info {
+  opacity: 0; /* Hide user info when collapsed */
+  pointer-events: none;
 }
 
-.modal {
+.modal-option-sidebar {
   position: absolute;
-    bottom: 80px;
-    left: 10px;
-    background-color: white;
-    padding: 10px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    width: 150px;
+  bottom: 80px;
+  left: 10px;
+  background-color: white;
+  padding: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  width: 150px;
 }
 
 .logout-btn {
@@ -120,6 +123,7 @@ nav ul {
   color: white;
   border: none;
   padding: 8px 16px;
+  width: 100%;
   cursor: pointer;
   border-radius: 4px;
 }

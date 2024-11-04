@@ -3,11 +3,14 @@ import "./sidebar.css";
 import { useNavigate } from "react-router-dom";
 import UserProfileNavbar from "../UserProfileNavbar/userProfileNavbar";
 import { UserContext } from "../../context/UserContext";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 
 const Sidebar = () => {
 	const { user, logoutUser } = useContext(UserContext); // Assuming `logout` is a function in your context
 	const [active, setActive] = useState("Geral");
 	const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
+	const [isExpanded, setIsExpanded] = useState(true);
 
 	const navigate = useNavigate();
 
@@ -26,10 +29,23 @@ const Sidebar = () => {
 		setIsModalOpen(!isModalOpen); // Toggle modal visibility
 	};
 
+	const toggleSidebar = () => {
+		setIsExpanded(!isExpanded); // Toggle sidebar expansion
+	};
+
 	return (
-		<div className="sidebar">
+		<div className={`sidebar ${isExpanded ? "expanded" : "collapsed"}`}>
+			<div className="arrow-expand" onClick={toggleSidebar}>
+				{isExpanded ? (
+					<KeyboardDoubleArrowLeftIcon sx={{ color: "#53535355" }} />
+				) : (
+					<KeyboardDoubleArrowRightIcon sx={{ color: "#53535355" }} />
+				)}
+			</div>
 			<div className="logo">
-				<img src="/icons/logo.svg" alt="Logo" />
+				{" "}
+				{/* Toggle when logo is clicked */}
+				<img src="/icons/medico-login.svg" alt="Logo" />
 			</div>
 			<nav className="nav-group-itens">
 				<ul className="nav-ul-itens">
@@ -40,19 +56,21 @@ const Sidebar = () => {
 							onClick={() => handleItemClick(item)}
 						>
 							<img src={`/icons/${item}.svg`} alt={item} />
-							<span>{item.charAt(0).toUpperCase() + item.slice(1)}</span>
+							{isExpanded && <span>{item.charAt(0).toUpperCase() + item.slice(1)}</span>}
 						</li>
 					))}
 				</ul>
 			</nav>
 			<div className="group-user-profile">
 				<UserProfileNavbar imageUrl={""} />
-				<div className="user-info" onClick={toggleModal}>
-					<span>{user?.name}</span>
-				</div>
+				{isExpanded && (
+					<div className="user-info" onClick={toggleModal}>
+						<span>{user?.name}</span>
+					</div>
+				)}
 
-				{isModalOpen && (
-					<div className="modal">
+				{isModalOpen && isExpanded && (
+					<div className="modal-option-sidebar">
 						<button onClick={handleLogoutClick} className="logout-btn">
 							Logout
 						</button>

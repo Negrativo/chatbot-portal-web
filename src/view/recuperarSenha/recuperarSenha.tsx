@@ -87,12 +87,32 @@ const RecuperarSenha: React.FC = () => {
 			<div className="container-dados-rec">
 				<div>
 					{!codigoSolicitado && (
-						<div>
+						<div className="div-solicitar">
 							<Typography variant="subtitle1" gutterBottom>
 								Insira o e-mail dados para prosseguir, enviaremos um codigo para recuperação da senha.
 							</Typography>
-							<TextField label="E-mail" fullWidth onChange={handleEmailChange} margin="normal" />
-							<Button variant="outlined" color="primary" fullWidth onClick={handleSolicitaToken}>
+							<TextField
+								label="E-mail"
+								fullWidth
+								onChange={handleEmailChange}
+								margin="normal"
+								placeholder="Exemplo: rodrigo123@gmail.com"
+								InputLabelProps={{
+									shrink: true, // Move o label para cima, como um título
+								}}
+								className="custom-textfield" // Aplica a classe CSS personalizada
+							/>
+							<Button
+								variant="outlined"
+								style={{
+									backgroundColor: "#1566FE",
+									color: "white",
+									width: 260,
+									height: 52,
+									marginBottom: 20,
+								}}
+								onClick={handleSolicitaToken}
+							>
 								Solicitar código
 							</Button>
 						</div>
@@ -105,6 +125,7 @@ const RecuperarSenha: React.FC = () => {
 								type="password"
 								onChange={handleCodigoChange}
 								fullWidth
+								className="custom-textfield"
 								margin="normal"
 							/>
 							<TextField
@@ -112,9 +133,21 @@ const RecuperarSenha: React.FC = () => {
 								type="password"
 								onChange={handleSenhaChange}
 								fullWidth
+								className="custom-textfield"
 								margin="normal"
 							/>
-							<Button variant="outlined" color="primary" fullWidth onClick={handleRecuperarSenha}>
+							<Button
+								variant="outlined"
+								style={{
+									backgroundColor: "#1566FE",
+									color: "white",
+									width: 260,
+									height: 52,
+									marginBottom: 20,
+								}}
+								fullWidth
+								onClick={handleRecuperarSenha}
+							>
 								Alterar Senha
 							</Button>
 						</div>

@@ -7,6 +7,8 @@ import { UserContext } from "../../context/UserContext";
 import { jwtDecode } from "jwt-decode";
 import Lottie from "react-lottie";
 import axios from "axios";
+import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import "./login.css";
 
 const Login: React.FC = () => {
@@ -21,7 +23,6 @@ const Login: React.FC = () => {
 
 	useEffect(() => {
 		const token = localStorage.getItem("token");
-		console.log(11111111111111111111111111111, token);
 		if (token) {
 			const decodedToken: any = jwtDecode(token);
 			const currentTime = Date.now() / 10000;
@@ -61,6 +62,7 @@ const Login: React.FC = () => {
 	async function handleLoginWeb() {
 		localStorage.removeItem("token");
 		sessionStorage.removeItem("token");
+		console.log(login, senha);
 		if (login && senha) {
 			const loginData = await loginWeb(login, senha);
 			if (loginData.token) {
@@ -110,28 +112,73 @@ const Login: React.FC = () => {
 	return (
 		<div className="login-container">
 			<div className="container-dados-login">
-				<div>
-					<Typography variant="h4" gutterBottom>
-						Bem-vindo ao nosso CRM.
-					</Typography>
-					<Typography variant="h4" gutterBottom>
-						Entre na sua conta e confira as novidades.
-					</Typography>
-					<Typography variant="subtitle1" gutterBottom>
-						Insira seus dados para prosseguir:
-					</Typography>
-					<TextField label="Login" fullWidth onChange={handleCodigoChange} margin="normal" />
-					<TextField label="Senha" type="password" fullWidth onChange={handleSenhaChange} margin="normal" />
-					<FormControlLabel
-						control={<Checkbox checked={manterConectado} onChange={handleCheckboxChange} color="primary" />}
-						label="manter-me conectado"
-					/>
-					<Button variant="outlined" color="primary" fullWidth onClick={handleLoginWeb}>
-						Entrar
-					</Button>
-					<Button variant="outlined" color="primary" fullWidth onClick={handleRecuperarSenhaWeb}>
-						Recuperar senha
-					</Button>
+				<div className="body-login">
+					<div className="header-login">
+						<div className="text-header">
+							<Typography variant="h4" gutterBottom>
+								Bem vindo de Volta!
+							</Typography>
+							<img src={`/icons/medico-login.svg`} alt={"icon"} />
+						</div>
+					</div>
+					<div className="div-textfields">
+						<TextField
+							label="Login"
+							fullWidth
+							onChange={handleCodigoChange}
+							margin="normal"
+							placeholder="Exemplo: Acesso123"
+							InputLabelProps={{
+								shrink: true, // Move o label para cima, como um título
+							}}
+							className="custom-textfield" // Aplica a classe CSS personalizada
+						/>
+						<TextField
+							label="Senha"
+							fullWidth
+							onChange={handleSenhaChange}
+							margin="normal"
+							placeholder="Exemplo: joaocarlos@hotmail.com"
+							type="password"
+							InputLabelProps={{
+								shrink: true, // Move o label para cima, como um título
+							}}
+							className="custom-textfield" // Aplica a classe CSS personalizada
+						/>
+					</div>
+					<div className="checkbox">
+						<FormControlLabel
+							control={
+								<Checkbox
+									checked={manterConectado}
+									onChange={handleCheckboxChange}
+									color="primary"
+									icon={<RadioButtonUncheckedIcon />} // Ícone quando não está marcado
+									checkedIcon={<CheckCircleIcon sx={{ color: "#3f51b5" }} />}
+									className="checkbox-round"
+								/>
+							}
+							label="manter conectado?"
+						/>
+					</div>
+					<div className="loginButtons">
+						<Button
+							variant="outlined"
+							style={{
+								backgroundColor: "#1566FE",
+								color: "white",
+								width: 260,
+								height: 52,
+								marginBottom: 20,
+							}}
+							onClick={handleLoginWeb}
+						>
+							Entrar
+						</Button>
+						<Typography variant="subtitle1" onClick={handleRecuperarSenhaWeb}>
+							Esqueceu a senha?
+						</Typography>
+					</div>
 				</div>
 			</div>
 			<div className="lottie-container">

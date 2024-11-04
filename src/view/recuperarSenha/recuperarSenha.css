@@ -25,16 +25,8 @@
     color: #ffffff;
   }
   
-  /* Estilos adicionais */
-  .login-container .MuiTypography-h4 {
-    margin-bottom: 16px;
+  .div-solicitar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
-  
-  .login-container .MuiTextField-root {
-    margin-bottom: 16px;
-  }
-  
-  .login-container .MuiButton-root {
-    margin-top: 16px;
-  }
-  

@@ -3,9 +3,8 @@ import { Calendar, momentLocalizer, Event } from "react-big-calendar";
 import moment from "moment";
 import "moment/locale/pt-br";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import Modal from "../Modal/Modal";
+import { Modal, Box, Typography } from "@mui/material";
 import { Agendamentos } from "../../interfaces/Agendamento";
-import { Typography } from "@mui/material";
 import { corPrimaria } from "../../util/stylesData";
 
 const localizer = momentLocalizer(moment);
@@ -93,18 +92,20 @@ const CalendarDashComponent: React.FC<Agendamentos> = ({ agendamentos }) => {
 				})}
 			/>
 
-			<Modal show={!!selectedEvent} onClose={closeModal}>
-				{selectedEvent && (
-					<>
-						<h2>Detalhes do Agendamento</h2>
-						<p>Paciente: {selectedEvent.paciente}</p>
-						<p>
-							Consulta agendada entre {moment(selectedEvent.start).format("LL")} e{" "}
-							{moment(selectedEvent.end).format("LL")}
-						</p>
-						{/* Adicione mais detalhes conforme necessário */}
-					</>
-				)}
+			<Modal open={!!selectedEvent} onClose={closeModal}>
+				<Box className="modal-box">
+					{selectedEvent && (
+						<>
+							<h2>Detalhes do Agendamento</h2>
+							<p>Paciente: {selectedEvent.paciente}</p>
+							<p>
+								Consulta agendada entre {moment(selectedEvent.start).format("LL")} e{" "}
+								{moment(selectedEvent.end).format("LL")}
+							</p>
+							{/* Adicione mais detalhes conforme necessário */}
+						</>
+					)}
+				</Box>
 			</Modal>
 		</div>
 	);
